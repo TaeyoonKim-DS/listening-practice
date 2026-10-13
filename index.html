@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>듣기 연습: 일본 금리와 주택대출</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#EEF2F6; --paper:#FFFFFF; --ink:#18212C; --muted:#5E6A7A;
+  --line:#D6DDE6; --accent:#2F4F9E; --accent-ink:#FFFFFF;
+  --hl:#FFE7A0; --hl-ink:#18212C; --done:#8B95A3; --good:#1E7A4C; --good-bg:#DDF3E6; --bad:#B4362B; --bad-bg:#FBE3E0;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121821; --paper:#1B2330; --ink:#E6EBF2; --muted:#98A3B3;
+    --line:#2C3747; --accent:#8FA9EC; --accent-ink:#0F1520;
+    --hl:#5A4A12; --hl-ink:#FFF4CF; --done:#6E7888; --good:#7FD6A4; --good-bg:#173A29; --bad:#F2928A; --bad-bg:#46201D;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121821; --paper:#1B2330; --ink:#E6EBF2; --muted:#98A3B3;
+  --line:#2C3747; --accent:#8FA9EC; --accent-ink:#0F1520;
+  --hl:#5A4A12; --hl-ink:#FFF4CF; --done:#6E7888; --good:#7FD6A4; --good-bg:#173A29; --bad:#F2928A; --bad-bg:#46201D;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:15px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:28px 20px 140px}
+h1{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:clamp(1.6rem,4.5vw,2.2rem);
+  line-height:1.2;margin:0 0 6px;letter-spacing:-0.01em}
+.sub{color:var(--muted);margin:0 0 24px}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px 20px;
+  background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:22px}
+.ctl label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+.ctl select,.ctl input[type=range]{width:100%}
+select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:7px 8px}
+.seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.seg button{flex:1;font:inherit;font-size:14px;border:0;background:transparent;color:var(--ink);padding:7px 6px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.val{font-variant-numeric:tabular-nums;color:var(--ink);font-weight:500}
+.passage{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 24px;
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:1.18rem;line-height:1.85}
+.passage p{margin:0 0 1.1em}
+.passage p:last-child{margin-bottom:0}
+.chunk{cursor:pointer;border-radius:4px;padding:1px 2px;transition:background .15s,filter .25s,color .15s}
+.chunk:hover{background:color-mix(in srgb,var(--hl) 45%,transparent)}
+.chunk.cur{background:var(--hl);color:var(--hl-ink)}
+.chunk.sent-cur{background:color-mix(in srgb,var(--hl) 40%,transparent)}
+.chunk.sent-cur.cur{background:var(--hl)}
+.sep{color:var(--line);user-select:none;margin:0 1px}
+.showsep-off .sep{display:none}
+.blind .chunk:not(.cur){filter:blur(6px);color:var(--done)}
+.blind .chunk:hover{filter:blur(2px)}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--paper);border-top:1px solid var(--line);
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+.bar-in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:500;border:1px solid var(--line);background:var(--bg);color:var(--ink);
+  border-radius:999px;padding:9px 16px;cursor:pointer;min-height:42px}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);min-width:110px}
+.btn:disabled{opacity:.45;cursor:default}
+button:focus-visible,select:focus-visible,input:focus-visible,.chunk:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pos{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums;font-size:14px}
+.tips{color:var(--muted);font-size:13.5px;margin-top:18px}
+.tips kbd{font-family:inherit;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--paper);color:var(--ink)}
+.warn{display:none;background:var(--hl);color:var(--hl-ink);border-radius:10px;padding:10px 14px;margin-bottom:16px}
+.head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.head .btn{flex-shrink:0;margin-top:4px}
+.editor{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:22px}
+.editor label{display:block;font-size:13px;color:var(--muted);margin:0 0 4px}
+.editor input,.editor textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);
+  border-radius:8px;padding:9px 10px;margin-bottom:12px}
+.editor textarea{font-family:"Source Serif 4",Georgia,serif;font-size:1rem;line-height:1.6;resize:vertical}
+.ed-actions{display:flex;gap:8px;flex-wrap:wrap}
+.ed-note{color:var(--muted);font-size:13px;margin:10px 0 0}
+.tabs{margin:0 0 18px;max-width:520px}
+.tabs button{padding:9px 6px;font-weight:500}
+body:not(.mode-listen) .listen-only{display:none !important}
+.dict{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.dots{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.dot{width:28px;height:28px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--muted);
+  font:inherit;font-size:12px;font-variant-numeric:tabular-nums;cursor:pointer;padding:0}
+.dot.cur{border-color:var(--accent);border-width:2px;color:var(--ink);font-weight:700}
+.dot.s-hi{background:var(--good-bg);color:var(--good);border-color:transparent}
+.dot.s-mid{background:var(--hl);color:var(--hl-ink);border-color:transparent}
+.dot.s-lo{background:var(--bad-bg);color:var(--bad);border-color:transparent}
+.dot.cur.s-hi,.dot.cur.s-mid,.dot.cur.s-lo{border-color:var(--accent)}
+.d-auto{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.d-auto .seg{min-width:200px}
+.d-auto-lbl{font-size:13px;color:var(--muted)}
+.d-rep{font-size:13px;color:var(--accent);font-variant-numeric:tabular-nums;font-weight:500}
+.d-head{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:14px;margin-bottom:10px;flex-wrap:wrap}
+.d-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.d-row .grow{flex:1}
+#dIn{width:100%;font-family:"Source Serif 4",Georgia,serif;font-size:1.12rem;line-height:1.6;color:var(--ink);
+  background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;resize:vertical;margin-bottom:12px}
+.d-result{border-top:1px solid var(--line);padding-top:14px;margin-top:4px}
+.d-score{font-family:"Source Serif 4",Georgia,serif;font-size:1.6rem;font-weight:600;margin:0 0 6px}
+.d-diff{font-family:"Source Serif 4",Georgia,serif;font-size:1.15rem;line-height:2}
+.d-diff .w{padding:1px 3px;border-radius:4px}
+.d-diff del{color:var(--bad);background:var(--bad-bg);text-decoration:line-through;padding:1px 3px;border-radius:4px}
+.d-diff ins{color:var(--good);background:var(--good-bg);text-decoration:none;border-bottom:2px solid var(--good);padding:1px 3px;border-radius:4px 4px 0 0}
+.legend{color:var(--muted);font-size:13px;margin:10px 0 0}
+.legend del,.legend ins{font-size:13px}
+.legend del{color:var(--bad);background:var(--bad-bg);padding:0 3px;border-radius:3px}
+.legend ins{color:var(--good);background:var(--good-bg);text-decoration:none;border-bottom:2px solid var(--good);padding:0 3px}
+.d-answer{font-family:"Source Serif 4",Georgia,serif;font-size:1.1rem;color:var(--muted);margin:8px 0 0}
+.d-summary{color:var(--muted);font-size:14px;margin:16px 0 0}
+.head-btns{display:flex;gap:8px;flex-shrink:0;margin-top:4px}
+.head .head-btns .btn{margin-top:0}
+.lib{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:22px}
+.lib h2,.editor h2{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:1.3rem;margin:0 0 12px}
+.lib-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.lib-note{color:var(--muted);font-size:13px;margin:6px 0 10px;min-height:1em}
+.lib-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.lib-item{display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line);padding:4px 0}
+.lib-open{flex:1;min-width:0;text-align:left;font:inherit;color:var(--ink);background:transparent;border:0;border-radius:8px;padding:10px 8px;cursor:pointer}
+.lib-open:hover{background:var(--bg)}
+.lib-title{display:block;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lib-meta{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.lib-item.cur .lib-title::after{content:"학습 중";font-size:12px;font-weight:500;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:0 7px;margin-left:8px;vertical-align:2px}
+.lib-item .btn{min-height:34px;padding:5px 12px;font-size:13px}
+.lib-item .btn.danger{color:var(--bad)}
+.d-tools{display:flex;justify-content:flex-end;margin-top:10px}
+.linkbtn{font:inherit;font-size:13px;color:var(--muted);background:none;border:0;text-decoration:underline;cursor:pointer;padding:4px}
+@media (max-width:520px){.head{flex-direction:column;margin-bottom:10px}.lib-item{flex-wrap:wrap}.lib-open{flex-basis:100%}}
+/* translation, loop */
+.trans{font-family:"Noto Sans KR",system-ui,sans-serif;font-size:.95rem;line-height:1.75;color:var(--muted);
+  margin:-.4em 0 1.4em;padding-left:12px;border-left:3px solid var(--line);white-space:pre-line}
+.hide-trans .trans{display:none}
+.chunk.sent-hover{text-decoration:underline dotted color-mix(in srgb,var(--muted) 60%,transparent);text-underline-offset:4px}
+.sent-tip{position:fixed;z-index:60;max-width:min(420px,calc(100vw - 32px));padding:8px 12px;border-radius:8px;
+  background:var(--ink);color:var(--paper);font-family:"Noto Sans KR",system-ui,sans-serif;font-size:14px;line-height:1.6;
+  box-shadow:0 4px 16px rgba(0,0,0,.18);pointer-events:none}
+.sent-tip.muted{opacity:.8}
+.lib-daily{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin:2px 0 6px}
+.ctl.wide{grid-column:1/-1}
+.loop-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.loop-row select{flex:1;min-width:140px}
+.btn.toggle[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.small{min-height:34px;padding:5px 12px;font-size:13px}
+.btn.danger{color:var(--bad)}
+.field{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+#transIn{font-family:"Noto Sans KR",system-ui,sans-serif}
+/* speaking */
+.sp-text{font-family:"Source Serif 4",Georgia,serif;font-size:1.35rem;line-height:1.6;margin:4px 0 16px;transition:filter .2s}
+.sp-text.veiled{filter:blur(8px)}
+.btn.rec.on{background:var(--bad);border-color:var(--bad);color:#fff}
+.meter{height:6px;border-radius:3px;background:var(--bg);overflow:hidden;margin:2px 0 14px}
+.meter i{display:block;height:100%;width:0;background:var(--good);transition:width .08s linear}
+.sp-msg{color:var(--muted);font-size:13.5px;min-height:1.3em;margin:0 0 6px}
+.dot.s-rec{border-style:dashed;border-color:var(--accent);color:var(--accent)}
+/* words */
+.w-add{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.w-add .field{flex:1;min-width:150px}
+.w-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.w-item{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.w-word{font-family:"Source Serif 4",Georgia,serif;font-size:1.3rem;font-weight:600}
+.w-src{font-size:12.5px;color:var(--muted)}
+.w-acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.w-mean{grid-column:1/-1;width:100%;transition:filter .2s}
+.quiz-on .w-mean:not(:focus){filter:blur(6px)}
+.w-ctx{grid-column:1/-1;margin:0;color:var(--muted);font-family:"Source Serif 4",Georgia,serif;font-size:1.02rem;line-height:1.6}
+.w-ex{grid-column:1/-1;font-size:.95rem;line-height:1.6;padding:8px 10px;border-radius:8px;background:color-mix(in srgb,var(--line) 35%,transparent)}
+.w-ex mark{background:var(--hl);color:var(--hl-ink);border-radius:3px;padding:0 2px}
+.w-ex .btn{margin-left:6px;vertical-align:middle}
+.w-ex-lbl{font-size:12px;color:var(--muted);font-weight:600}
+.w-ex-ko{color:var(--muted);font-family:"Noto Sans KR",system-ui,sans-serif;font-size:.9rem;margin-top:2px}
+#wAutoBtn{margin:8px 0 4px}
+.w-ctx mark{background:var(--hl);color:var(--hl-ink);border-radius:3px;padding:0 2px}
+#addWord{position:fixed;z-index:25;min-height:36px;padding:6px 14px;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
+  background:var(--ink);color:var(--paper);padding:9px 16px;border-radius:999px;font-size:14px;opacity:0;
+  pointer-events:none;transition:opacity .2s;z-index:30;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
+@media (max-width:520px){.w-item{grid-template-columns:1fr}.w-acts{justify-content:flex-start}}
+@media (prefers-reduced-motion:reduce){.chunk{transition:none}}
+@media (max-width:520px){.passage{padding:18px 16px;font-size:1.08rem}.pos{width:100%;margin-left:0;order:-1}}
+/* dark mode toggle */
+.theme-btn{font:inherit;font-size:13px;background:var(--bg);color:var(--muted);border:1px solid var(--line);
+  border-radius:999px;padding:5px 12px;cursor:pointer;min-height:34px;white-space:nowrap}
+.theme-btn:hover{color:var(--ink)}
+/* progress bar */
+.progress{height:3px;background:var(--line);border-radius:2px;margin:0 0 18px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--accent);transition:width .3s ease;width:0}
+/* auto-advance flash */
+.d-score.flash-good{color:var(--good);animation:flash .6s}
+@keyframes flash{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+/* streak banner */
+.streak{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:10px;
+  padding:10px 14px;margin-bottom:18px;font-size:14px;flex-wrap:wrap}
+.streak-fire{font-size:1.4em}
+.streak-num{font-weight:700;font-size:1.2em;color:var(--accent)}
+.streak-cal{display:flex;gap:3px;margin-left:auto}
+.streak-day{width:14px;height:14px;border-radius:3px;background:var(--bg);border:1px solid var(--line)}
+.streak-day.active{background:var(--good);border-color:var(--good)}
+.streak-day.today{border-color:var(--accent);border-width:2px}
+/* word quiz */
+.wq{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-top:18px}
+.wq h3{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:1.1rem;margin:0 0 12px}
+.wq-prompt{font-family:"Source Serif 4",Georgia,serif;font-size:1.4rem;font-weight:600;margin:0 0 12px;min-height:1.6em}
+.wq-hint{color:var(--muted);font-size:13px;margin:0 0 10px}
+.wq-row{display:flex;gap:8px;margin-bottom:10px}
+.wq-row .field{flex:1}
+.wq-feedback{font-size:14px;min-height:1.5em;margin:0 0 6px}
+.wq-feedback.correct{color:var(--good);font-weight:500}
+.wq-feedback.wrong{color:var(--bad)}
+.wq-progress{color:var(--muted);font-size:13px}
+/* word highlight during speech */
+.chunk .whl{border-radius:3px;padding:0 1px;transition:background .1s}
+.chunk .whl.whl-cur{background:var(--accent);color:var(--accent-ink);border-radius:3px;padding:0 2px}
+/* speed trainer */
+.speed-train{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--muted)}
+.speed-train .val{font-size:14px}
+/* bookmark star */
+.bk-star{font-size:16px;background:none;border:0;cursor:pointer;padding:2px 4px;opacity:.4;transition:opacity .15s}
+.bk-star:hover,.bk-star.on{opacity:1}
+.dot.s-bk{box-shadow:inset 0 -3px 0 var(--accent)}
+/* hint display */
+.d-hint{font-family:"Source Serif 4",Georgia,serif;font-size:1rem;color:var(--muted);margin:0 0 8px;font-style:italic}
+/* passage meta */
+.passage-meta{color:var(--muted);font-size:13px;margin:-14px 0 18px;display:flex;gap:12px;flex-wrap:wrap}
+/* swipe area */
+.swipe-hint{text-align:center;color:var(--muted);font-size:12px;opacity:0;transition:opacity .3s;margin-top:6px}
+.swipe-hint.show{opacity:1}
+/* completion badge in library */
+.lib-badge{display:inline-block;font-size:11px;font-weight:500;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px}
+.lib-badge.complete{background:var(--good-bg);color:var(--good)}
+.lib-badge.partial{background:var(--hl);color:var(--hl-ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <h1 id="title">일본 장기금리 30년 만의 최고치</h1>
+    <div class="head-btns">
+      <button class="btn" id="libBtn" aria-expanded="false" aria-controls="lib">보관함</button>
+      <button class="btn" id="editBtn">이 지문 편집</button>
+      <button class="theme-btn" id="themeBtn" aria-label="다크 모드 전환">🌙</button>
+    </div>
+  </div>
+  <p class="sub listen-only">문장이나 끊어읽기 구간을 누르면 그 부분부터 들을 수 있어요.</p>
+  <p class="sub" id="dictSub" hidden>한 문장씩 듣고 들은 대로 입력한 뒤 원문과 비교해 보세요.</p>
+  <p class="sub" id="speakSub" hidden>원어민 음성을 듣고 따라 말한 뒤, 내 녹음과 번갈아 들으며 비교해 보세요.</p>
+  <p class="sub" id="wordsSub" hidden>듣기 탭 본문에서 단어나 표현을 드래그해 담고, 뜻을 적어 두고 복습하세요.</p>
+
+  <div class="seg tabs" role="group" aria-label="학습 모드">
+    <button data-tab="listen" aria-pressed="true">듣기</button>
+    <button data-tab="dict" aria-pressed="false">받아쓰기</button>
+    <button data-tab="speak" aria-pressed="false">말하기</button>
+    <button data-tab="words" aria-pressed="false">단어장</button>
+  </div>
+
+  <div class="streak" id="streak" hidden>
+    <span class="streak-fire">🔥</span>
+    <span><span class="streak-num" id="streakNum">0</span>일 연속 학습</span>
+    <span class="streak-cal" id="streakCal"></span>
+  </div>
+
+  <section class="lib" id="lib" hidden>
+    <h2>지문 보관함</h2>
+    <div class="lib-actions">
+      <button class="btn primary" id="newBtn">새 지문 추가</button>
+      <button class="btn" id="dailyBtn" title="위키백과 'In the news'와 오늘의 글로 영어 지문을 만들어요">📰 오늘의 뉴스</button>
+      <button class="btn" id="exportBtn">파일로 내보내기</button>
+      <button class="btn" id="importBtn">파일에서 불러오기</button>
+      <input type="file" id="importIn" accept=".json,application/json" hidden>
+    </div>
+    <label class="lib-daily"><input type="checkbox" id="dailyAuto" checked> 매일 처음 열 때 오늘의 뉴스 지문을 자동으로 받아요 (인터넷 필요, 출처: 위키백과)</label>
+    <p class="lib-note" id="libNote" aria-live="polite"></p>
+    <ul class="lib-list" id="libList"></ul>
+  </section>
+
+  <div class="editor" id="editor" hidden>
+    <h2 id="edHead">지문 편집</h2>
+    <label for="titleIn">제목</label>
+    <input type="text" id="titleIn" placeholder="예: BBC 6 Minute English">
+    <label for="textIn">영어 본문</label>
+    <textarea id="textIn" rows="12" placeholder="영어 지문을 붙여넣으세요. 끊어 읽을 곳에 / 를 넣으면 그 위치에서 끊어 읽고, 없으면 쉼표와 문장 끝에서 끊어요. 빈 줄로 문단을 나눠요."></textarea>
+    <label for="transIn">한국어 해석 (선택)</label>
+    <textarea id="transIn" rows="5" placeholder="영어 본문과 똑같이 빈 줄로 문단을 나눠 붙여넣으면 각 문단 아래에 해석이 붙어요. 문단 수가 다르면 본문 끝에 한꺼번에 보여 줘요."></textarea>
+    <div class="ed-actions">
+      <button class="btn primary" id="applyBtn">저장하고 듣기</button>
+      <button class="btn" id="cancelBtn">취소</button>
+    </div>
+    <p class="ed-note" id="edNote">본문을 고치면 이 지문의 받아쓰기 기록은 초기화돼요.</p>
+  </div>
+
+  <div class="warn" id="warn">이 브라우저에서 음성 읽기를 지원하지 않아요. Chrome, Safari, Edge에서 열어 주세요.</div>
+
+  <div class="controls">
+    <div class="ctl">
+      <label for="voice">목소리</label>
+      <select id="voice"></select>
+    </div>
+    <div class="ctl">
+      <label for="rate">속도 <span class="val" id="rateVal">0.9×</span></label>
+      <input type="range" id="rate" min="0.6" max="1.3" step="0.05" value="0.9">
+    </div>
+    <div class="ctl listen-only">
+      <label id="modeLbl">읽기 방식</label>
+      <div class="seg" role="group" aria-labelledby="modeLbl">
+        <button data-mode="sentence" aria-pressed="true">문장 단위</button>
+        <button data-mode="chunk" aria-pressed="false">끊어 읽기</button>
+      </div>
+    </div>
+    <div class="ctl listen-only">
+      <label for="gap">구간 사이 쉼 <span class="val" id="gapVal">0.8초</span></label>
+      <input type="range" id="gap" min="0" max="4" step="0.2" value="0.8">
+    </div>
+    <div class="ctl listen-only">
+      <label id="viewLbl">본문 보기</label>
+      <div class="seg" role="group" aria-labelledby="viewLbl">
+        <button data-view="show" aria-pressed="true">보이기</button>
+        <button data-view="blind" aria-pressed="false">가리기</button>
+      </div>
+    </div>
+    <div class="ctl listen-only">
+      <label id="repLbl">문장 반복</label>
+      <div class="seg" role="group" aria-labelledby="repLbl">
+        <button data-rep="1" aria-pressed="true">1회</button>
+        <button data-rep="2" aria-pressed="false">2회</button>
+        <button data-rep="3" aria-pressed="false">3회</button>
+      </div>
+    </div>
+    <div class="ctl listen-only" id="transCtl" hidden>
+      <label id="trLbl">한국어 해석</label>
+      <div class="seg" role="group" aria-labelledby="trLbl">
+        <button data-tr="hide" aria-pressed="true">숨기기</button>
+        <button data-tr="show" aria-pressed="false">보이기</button>
+      </div>
+    </div>
+    <div class="ctl wide listen-only">
+      <label id="loopLbl">구간 반복</label>
+      <div class="loop-row" role="group" aria-labelledby="loopLbl">
+        <select id="loopA" aria-label="반복 시작 문장"></select>
+        <span aria-hidden="true">~</span>
+        <select id="loopB" aria-label="반복 끝 문장"></select>
+        <button class="btn toggle" id="loopBtn" aria-pressed="false">반복 켜기</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress listen-only" id="listenProgress"><i id="listenBar"></i></div>
+  <div class="passage listen-only hide-trans" id="passage" aria-live="off"></div>
+  <div class="passage-meta listen-only" id="passageMeta"></div>
+
+  <section class="dict" id="dict" hidden>
+    <div class="dots" id="dots" role="group" aria-label="문장 선택"></div>
+    <div class="d-head"><span id="dPos"></span><span id="dStat"></span></div>
+    <div class="d-auto">
+      <span class="d-auto-lbl" id="autoLbl">문장을 열면 자동 재생</span>
+      <div class="seg" role="group" aria-labelledby="autoLbl">
+        <button data-auto="0" aria-pressed="false">끄기</button>
+        <button data-auto="1" aria-pressed="true">1회</button>
+        <button data-auto="5" aria-pressed="false">5회</button>
+        <button data-auto="10" aria-pressed="false">10회</button>
+      </div>
+      <button class="btn toggle small" id="dWeak" aria-pressed="false">90% 미만 문장만</button>
+      <span class="d-rep" id="dRep" aria-live="polite"></span>
+    </div>
+    <div class="d-row">
+      <button class="btn primary" id="dPlay">문장 듣기</button>
+      <button class="btn" id="dSlow">천천히 듣기</button>
+      <button class="btn" id="dChunk">끊어서 듣기</button>
+    </div>
+    <label class="sr" for="dIn" style="position:absolute;left:-9999px">들은 문장 입력</label>
+    <textarea id="dIn" rows="3" autocomplete="off" autocapitalize="off" spellcheck="false"
+      placeholder="들은 문장을 입력하세요. Enter로 채점, Shift+Enter로 다시 듣기"></textarea>
+    <div class="d-row">
+      <button class="btn primary" id="dCheck">채점하기</button>
+      <button class="btn" id="dHint" title="첫 글자 힌트를 보여줘요">힌트</button>
+      <button class="btn" id="dReveal">정답 보기</button>
+      <span class="grow"></span>
+      <button class="btn" id="dPrev">이전 문장</button>
+      <button class="btn" id="dNext">다음 문장</button>
+    </div>
+    <div class="d-result" id="dResult" hidden>
+      <p class="d-score" id="dScore"></p>
+      <div class="d-diff" id="dDiff"></div>
+      <p class="legend">초록 밑줄 <ins>단어</ins>는 놓친 단어, 빨간 줄 <del>단어</del>는 잘못 쓰거나 원문에 없는 단어예요. 대소문자와 문장부호는 채점하지 않아요.</p>
+    </div>
+    <p class="d-answer" id="dAnswer" hidden></p>
+    <p class="d-summary" id="dSummary"></p>
+    <div class="d-tools"><button class="linkbtn" id="dClear">이 지문의 받아쓰기 기록 지우기</button></div>
+  </section>
+
+  <section class="dict" id="speak" hidden>
+    <div class="dots" id="spDots" role="group" aria-label="문장 선택"></div>
+    <div class="d-head"><span id="spPos"></span><span id="spStat"></span></div>
+    <p class="sp-text" id="spText"></p>
+    <div class="d-row">
+      <button class="btn" id="spNative">원어민 듣기</button>
+      <button class="btn primary rec" id="spRec">녹음 시작</button>
+      <button class="btn" id="spMine" disabled>내 녹음 듣기</button>
+      <button class="btn" id="spBoth" disabled>번갈아 듣기</button>
+    </div>
+    <div class="meter" aria-hidden="true"><i id="spMeter"></i></div>
+    <div class="d-auto">
+      <span class="d-auto-lbl" id="spModeLbl">녹음 방식</span>
+      <div class="seg" role="group" aria-labelledby="spModeLbl">
+        <button data-spmode="manual" aria-pressed="true">직접 시작·정지</button>
+        <button data-spmode="after" aria-pressed="false">듣고 바로 녹음</button>
+      </div>
+      <button class="btn toggle small" id="spHide" aria-pressed="false">문장 가리기</button>
+    </div>
+    <p class="sp-msg" id="spMsg" aria-live="polite"></p>
+    <div class="d-result" id="spResult" hidden>
+      <p class="d-score" id="spScore"></p>
+      <div class="d-diff" id="spDiff"></div>
+      <p class="legend">브라우저 음성 인식이 알아들은 내용을 원문과 비교했어요. 초록 밑줄 <ins>단어</ins>는 인식되지 않은 단어, 빨간 줄 <del>단어</del>는 다르게 인식된 단어예요. 인식기 자체의 실수도 있으니 참고용으로 보세요.</p>
+    </div>
+    <div class="d-row" style="margin-top:14px">
+      <span class="grow"></span>
+      <button class="btn" id="spPrev">이전 문장</button>
+      <button class="btn" id="spNext">다음 문장</button>
+    </div>
+    <div class="d-tools"><a class="linkbtn" id="spDl" hidden>이 녹음 내려받기</a></div>
+  </section>
+
+  <section class="dict" id="words" hidden>
+    <div class="w-add">
+      <input class="field" id="wNew" placeholder="단어 또는 표현" aria-label="추가할 단어 또는 표현" autocapitalize="off">
+      <input class="field" id="wNewMean" placeholder="뜻이나 메모 (선택)" aria-label="뜻이나 메모">
+      <button class="btn primary" id="wAddBtn">추가</button>
+    </div>
+    <button class="btn" id="wAutoBtn" title="본문에서 공부할 만한 단어를 골라 뜻과 예문을 붙여요 (인터넷 필요)">✨ 단어 10개 자동 정리</button>
+    <div class="d-auto">
+      <div class="seg" role="group" aria-label="보기 범위">
+        <button data-wscope="cur" aria-pressed="true">이 지문</button>
+        <button data-wscope="all" aria-pressed="false">전체</button>
+      </div>
+      <button class="btn toggle small" id="wQuiz" aria-pressed="false">뜻 가리기</button>
+      <button class="btn toggle small" id="wQuizStart" aria-pressed="false">단어 퀴즈</button>
+      <span class="d-rep" id="wCount"></span>
+    </div>
+    <ul class="w-list" id="wList"></ul>
+    <p class="d-summary" id="wEmpty"></p>
+    <div class="wq" id="wordQuiz" hidden>
+      <h3>단어 퀴즈</h3>
+      <p class="wq-hint" id="wqHint"></p>
+      <p class="wq-prompt" id="wqPrompt"></p>
+      <div class="wq-row">
+        <input class="field" id="wqIn" placeholder="정답을 입력하세요" autocapitalize="off" autocomplete="off" spellcheck="false">
+        <button class="btn primary" id="wqCheck">확인</button>
+        <button class="btn" id="wqSkip">건너뛰기</button>
+      </div>
+      <p class="wq-feedback" id="wqFb"></p>
+      <p class="wq-progress" id="wqProg"></p>
+    </div>
+  </section>
+
+  <p class="tips listen-only">
+    <kbd>1</kbd>~<kbd>4</kbd> 탭 전환 · <kbd>Esc</kbd> 전체 정지 · 휴대폰에서는 좌우 스와이프로 문장 이동.
+    듣기: <kbd>Space</kbd> 재생/일시정지 · <kbd>←</kbd> <kbd>→</kbd> 이전/다음 · <kbd>R</kbd> 다시.
+    받아쓰기: <kbd>Space</kbd> 듣기 · <kbd>S</kbd> 천천히 · <kbd>H</kbd> 힌트 · <kbd>←</kbd> <kbd>→</kbd> 이동.
+    말하기: <kbd>Space</kbd> 녹음 · <kbd>R</kbd> 원어민 · <kbd>M</kbd> 내 녹음 · <kbd>←</kbd> <kbd>→</kbd> 이동.
+    본문 단어 드래그(휴대폰: 길게 누르기)로 단어장에 추가 · ★ 북마크 · 숫자는 영어 단어도 OK (forty = 40).
+    추천: 가리기 듣기 → 받아쓰기 → 말하기 섀도잉 → 단어 퀴즈 → 해석 확인. 녹음은 새로고침 후에도 남아요.
+  </p>
+</div>
+
+<div class="bar listen-only">
+  <div class="bar-in">
+    <button class="btn" id="prev" aria-label="이전 문장">이전</button>
+    <button class="btn primary" id="play">재생</button>
+    <button class="btn" id="stopBtn" aria-label="정지하고 처음으로" hidden>■ 정지</button>
+    <button class="btn" id="next" aria-label="다음 문장">다음</button>
+    <button class="btn" id="again">다시 듣기</button>
+    <button class="btn toggle small" id="speedTrain" aria-pressed="false" title="재생할 때마다 속도가 0.05씩 올라가요">속도 훈련</button>
+    <span class="pos" id="pos"></span>
+  </div>
+</div>
+
+<button class="btn primary" id="addWord" hidden>단어장에 추가</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="sent-tip" id="sentTip" lang="ko" role="tooltip" hidden></div>
+
+<script>
+// ---- dark mode toggle
+(function(){
+  const root = document.documentElement, btn = document.getElementById('themeBtn');
+  let theme = null;
+  try { theme = localStorage.getItem('lp-theme'); } catch(e){}
+  if (theme) root.setAttribute('data-theme', theme);
+  function update(){ const dark = root.getAttribute('data-theme') === 'dark' || (!root.getAttribute('data-theme') && matchMedia('(prefers-color-scheme:dark)').matches); btn.textContent = dark ? '☀️' : '🌙'; }
+  update();
+  btn.addEventListener('click', () => {
+    const cur = root.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : cur === 'light' ? 'dark' : matchMedia('(prefers-color-scheme:dark)').matches ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('lp-theme', next); } catch(e){}
+    update();
+  });
+  matchMedia('(prefers-color-scheme:dark)').addEventListener('change', update);
+})();
+
+const RAW = `Long-term interest rates in Japan/ are at their highest level in about 30 years,/ and concern about rising mortgage rates is spreading./ At one homebuilder in Miyazaki City,/ many customers still choose the cheaper variable rate./ Even so,/ the company says questions about rising monthly repayments have continued/ since the current fiscal year began./
+
+Rates on display at banks remain/ in the 2 to 3 percent range for loans with a fixed rate./ For variable loans,/ whose rate can change,/ the range is 0.9 to 1 percent./ The company estimates that on a 40,000,000 yen loan repaid/ over 40 years,/ an increase of 0.25 percent adds about 5,000 yen monthly./
+
+Its sales manager says a difference of only a few thousand yen a month/ still changes the total repayment over 40 or 50 years./ The company says rising rates/ have not reduced the number of new homes it builds./ It still offers customers funding and repayment plans/ that assume further increases./ He thinks prospective buyers should not hurry,/ but be guided carefully toward repayments they can truly manage./
+
+A financial planner says Japanese society/ has entered an era in which interest rates exist./ She says plans should no longer assume/ that today's low level continues./ She stresses that examining what happens if variable rates climb/ toward around 1.5 to 2 percent is indispensable./ Understanding how fixed and variable loans differ in risk/ matters when shaping repayments around one's own life plan./`;
+
+const DEFAULT_TITLE = '일본 장기금리 30년 만의 최고치';
+let sentences = [];  // {para, chunks}
+let chunksFlat = [];
+const passage = document.getElementById('passage');
+
+// ---- parse into paragraphs > sentences > chunks
+function parseText(raw){
+  const out = [];
+  const hasSlash = raw.includes('/');
+  raw.replace(/\r/g,'').trim().split(/\n\s*\n/).forEach((para, pi) => {
+    para = para.replace(/\s*\n\s*/g, ' ');
+    let cur = [];
+    const pieces = hasSlash ? para.split('/') : para.split(/(?<=[,;:])\s+/);
+    pieces.map(t => t.trim()).filter(Boolean).forEach(piece => {
+      piece.split(/(?<=[.?!]["'”’)]?)\s+(?=["'“‘(]?[A-Z0-9])/).forEach(part => {
+        part = part.trim(); if (!part) return;
+        cur.push(part);
+        if (/[.?!]["'”’)]?$/.test(part)) { out.push({para: pi, chunks: cur}); cur = []; }
+      });
+    });
+    if (cur.length) out.push({para: pi, chunks: cur});
+  });
+  return out;
+}
+function build(raw, trans){
+  if (typeof tipHide === 'function') tipHide();
+  chunksFlat = []; passage.innerHTML = '';
+  sentences = parseText(raw);
+
+let pEl = null, lastPara = -1; const paraEls = [];
+sentences.forEach((s, si) => {
+  if (s.para !== lastPara) { pEl = document.createElement('p'); passage.appendChild(pEl); paraEls.push(pEl); lastPara = s.para; }
+  s.chunkObjs = s.chunks.map((t, ci) => {
+    const span = document.createElement('span');
+    span.className = 'chunk'; span.textContent = t; span.tabIndex = 0;
+    const obj = {text: t, s: si, el: span, idx: chunksFlat.length};
+    chunksFlat.push(obj);
+    span.addEventListener('click', () => { if (String(getSelection()).trim()) return; startFrom(si, ci); });
+    span.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); startFrom(si, ci); } });
+    span.addEventListener('mouseenter', () => tipShow(si, span));
+    span.addEventListener('mouseleave', tipHide);
+    span.addEventListener('focus', () => tipShow(si, span));
+    span.addEventListener('blur', tipHide);
+    pEl.appendChild(span);
+    if (ci < s.chunks.length - 1) {
+      const sep = document.createElement('span'); sep.className = 'sep'; sep.textContent = '/'; pEl.appendChild(sep);
+    }
+    pEl.appendChild(document.createTextNode(' '));
+    return obj;
+  });
+});
+  const tp = (trans || '').replace(/\r/g, '').trim().split(/\n\s*\n/).map(x => x.trim()).filter(Boolean);
+  if (tp.length === paraEls.length) paraEls.forEach((pe, i) => { const t = document.createElement('p'); t.className = 'trans'; t.lang = 'ko'; t.textContent = tp[i]; pe.after(t); });
+  else if (tp.length) { const t = document.createElement('p'); t.className = 'trans'; t.lang = 'ko'; t.textContent = tp.join('\n\n'); passage.appendChild(t); }
+  document.getElementById('transCtl').hidden = !tp.length;
+  fillLoop();
+  if (typeof resetDict === 'function') resetDict();
+  const posEl = document.getElementById('pos');
+  if (posEl) posEl.textContent = `문장 1 / ${sentences.length}`;
+  // Passage meta: word count + estimated listening time
+  const meta = document.getElementById('passageMeta');
+  if (meta) {
+    const allWords = chunksFlat.map(c => c.text).join(' ').split(/\s+/).length;
+    const mins = Math.ceil(allWords / 130); // ~130 WPM at normal speed
+    meta.textContent = `${sentences.length}문장 · ${allWords}단어 · 약 ${mins}분`;
+  }
+}
+
+
+// ---- state
+const synth = window.speechSynthesis;
+if (!synth) document.getElementById('warn').style.display = 'block';
+let voices = [], mode = 'sentence', reps = 1, playing = false, token = 0;
+let sIdx = 0, cIdx = 0;
+const $ = id => document.getElementById(id);
+const rateEl = $('rate'), gapEl = $('gap'), voiceEl = $('voice');
+
+function loadVoices(){
+  if (!synth) return;
+  const all = synth.getVoices().filter(v => /^en[-_]/i.test(v.lang));
+  if (!all.length) return;
+  const prev = voiceEl.value;
+  voices = all.sort((a,b) => {
+    const score = v => (/en[-_]US/i.test(v.lang)?0:/en[-_]GB/i.test(v.lang)?1:2) - (/natural|neural|premium|enhanced|google/i.test(v.name)?3:0);
+    return score(a) - score(b);
+  });
+  voiceEl.innerHTML = '';
+  voices.forEach((v,i) => {
+    const o = document.createElement('option'); o.value = v.name; o.textContent = `${v.name} (${v.lang})`; voiceEl.appendChild(o);
+  });
+  let saved = null; try { saved = localStorage.getItem('lp-voice'); } catch(e){}
+  const pick = [prev, saved].find(n => n && voices.some(v => v.name === n));
+  if (pick) voiceEl.value = pick;
+}
+if (synth) { loadVoices(); synth.onvoiceschanged = loadVoices; }
+voiceEl.addEventListener('change', () => { try{localStorage.setItem('lp-voice', voiceEl.value);}catch(e){} restartIfPlaying(); });
+
+rateEl.addEventListener('input', () => { $('rateVal').textContent = (+rateEl.value).toFixed(2).replace(/0$/,'') + '×'; });
+rateEl.addEventListener('change', restartIfPlaying);
+gapEl.addEventListener('input', () => { $('gapVal').textContent = (+gapEl.value).toFixed(1) + '초'; });
+gapEl.addEventListener('change', () => { try { localStorage.setItem('lp-gap', gapEl.value); } catch(e){} });
+try { const g = +localStorage.getItem('lp-gap'); if (g >= 0 && g <= 4) { gapEl.value = g; gapEl.dispatchEvent(new Event('input')); } } catch(e){}
+
+function segGroup(attr, cb){
+  document.querySelectorAll(`[data-${attr}]`).forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll(`[data-${attr}]`).forEach(x => x.setAttribute('aria-pressed', x === b));
+    cb(b.dataset[attr]);
+  }));
+}
+segGroup('mode', m => { mode = m; passage.classList.toggle('showsep-off', false); restartIfPlaying(); });
+segGroup('view', v => passage.classList.toggle('blind', v === 'blind'));
+segGroup('rep', r => { reps = +r; });
+
+// ---- highlighting
+function clearHL(){ chunksFlat.forEach(c => c.el.classList.remove('cur','sent-cur')); }
+function highlight(si, ci){
+  clearHL();
+  const s = sentences[si];
+  s.chunkObjs.forEach((c,i) => {
+    c.el.classList.add('sent-cur');
+    if (mode === 'sentence' || i === ci) c.el.classList.add('cur');
+  });
+  const el = s.chunkObjs[mode === 'sentence' ? 0 : ci].el;
+  const r = el.getBoundingClientRect();
+  if (r.top < 60 || r.bottom > window.innerHeight - 110) el.scrollIntoView({block:'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  $('pos').textContent = `문장 ${si+1} / ${sentences.length}` + (loopOn ? ' · 구간 반복 중' : '');
+  $('listenBar').style.width = (sentences.length > 1 ? (si / (sentences.length - 1)) * 100 : 100) + '%';
+}
+
+// ---- speech
+function speak(text, myToken, mul = 1){
+  return new Promise(res => {
+    if (myToken !== token) return res(false);
+    const u = new SpeechSynthesisUtterance(text);
+    const v = voices.find(x => x.name === voiceEl.value); if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
+    u.rate = Math.max(0.5, +rateEl.value * mul);
+    u.onend = () => res(myToken === token);
+    u.onerror = () => res(false);
+    synth.speak(u);
+  });
+}
+const wait = (ms, myToken) => new Promise(r => setTimeout(() => r(myToken === token), ms));
+
+async function run(myToken){
+  for (;;) {
+    if (loopOn && (sIdx < loopA || sIdx > loopB)) { sIdx = loopA; cIdx = 0; }
+    if (sIdx >= sentences.length) break;
+    const s = sentences[sIdx];
+    for (let r = 0; r < reps; r++) {
+      if (mode === 'sentence') {
+        highlight(sIdx, 0);
+        if (!await speak(s.chunks.join(' '), myToken)) return;
+        if (!await wait(+gapEl.value * 1000 + 250, myToken)) return;
+      } else {
+        const startC = (r === 0) ? cIdx : 0;
+        for (let c = startC; c < s.chunks.length; c++) {
+          cIdx = c; highlight(sIdx, c);
+          if (!await speakWithHL(s.chunks[c], myToken, 1, s.chunkObjs[c])) return;
+          if (!await wait(+gapEl.value * 1000, myToken)) return;
+        }
+        if (!await wait(300, myToken)) return;
+      }
+    }
+    sIdx++; cIdx = 0;
+    if (loopOn && sIdx > loopB) { sIdx = loopA; if (!await wait(700, myToken)) return; }
+  }
+  if (speedTrainOn) {
+    const newRate = Math.min(1.3, +rateEl.value + 0.05);
+    rateEl.value = newRate; rateEl.dispatchEvent(new Event('input'));
+    sIdx = 0; cIdx = 0;
+    toast(`속도 훈련: ${newRate.toFixed(2)}×로 올라가요!`);
+    const t2 = token; if (await wait(1200, t2)) { run(t2); return; }
+  }
+  stop(); sIdx = 0; cIdx = 0; clearHL(); markListened(); $('listenBar').style.width = '100%'; $('pos').textContent = '끝까지 들었어요. 재생을 누르면 처음부터 다시 시작해요.';
+}
+
+// ---- loop range
+var loopOn = false, loopA = 0, loopB = 0;
+function setLoop(on){
+  loopOn = on;
+  const b = $('loopBtn'); b.setAttribute('aria-pressed', on); b.textContent = on ? '반복 끄기' : '반복 켜기';
+}
+function fillLoop(){
+  const a = $('loopA'), b = $('loopB'); a.innerHTML = ''; b.innerHTML = '';
+  sentences.forEach((s, i) => {
+    const w = s.chunks.join(' ').split(/\s+/);
+    const label = `${i + 1}. ${w.slice(0, 6).join(' ')}${w.length > 6 ? '…' : ''}`;
+    a.add(new Option(label, i)); b.add(new Option(label, i));
+  });
+  loopA = 0; loopB = 0; a.value = 0; b.value = 0; setLoop(false);
+}
+function onLoopChange(){
+  loopA = +$('loopA').value; loopB = +$('loopB').value;
+  if (loopA > loopB) { [loopA, loopB] = [loopB, loopA]; $('loopA').value = loopA; $('loopB').value = loopB; }
+  if (loopOn && playing) { sIdx = loopA; cIdx = 0; start(); }
+}
+$('loopA').addEventListener('change', () => { if (+$('loopB').value < +$('loopA').value) $('loopB').value = $('loopA').value; onLoopChange(); });
+$('loopB').addEventListener('change', onLoopChange);
+$('loopBtn').addEventListener('click', () => {
+  setLoop(!loopOn);
+  if (loopOn) { sIdx = loopA; cIdx = 0; start(); } else if (playing) highlight(sIdx, cIdx);
+});
+
+var paused = false;
+function setPlayUI(){
+  $('play').textContent = playing ? '일시정지' : paused ? '이어 듣기' : '재생';
+  $('stopBtn').hidden = !(playing || paused);
+}
+function start(){
+  if (!synth) return;
+  token++; synth.cancel(); playing = true; paused = false; setPlayUI();
+  const t = token; setTimeout(() => run(t), 60);
+}
+function stop(){
+  token++; if (synth) synth.cancel(); playing = false; setPlayUI();
+  clearWordHL();
+}
+// pause: stop speaking but keep the position; resuming restarts the current sentence (or chunk).
+// speechSynthesis.pause() is unreliable (Chrome drops paused utterances, Android ignores it), so we don't use it.
+function pausePlay(){ stop(); paused = true; setPlayUI(); $('pos').textContent = `문장 ${sIdx + 1} / ${sentences.length} · 일시정지`; }
+function stopToStart(){
+  stop(); paused = false; setPlayUI();
+  sIdx = 0; cIdx = 0; clearHL(); $('listenBar').style.width = '0%';
+  $('pos').textContent = `문장 1 / ${sentences.length}`;
+}
+function startFrom(si, ci){ if (loopOn && (si < loopA || si > loopB)) setLoop(false); sIdx = si; cIdx = (mode === 'chunk') ? ci : 0; start(); }
+function restartIfPlaying(){ if (playing) start(); }
+function go(delta){
+  sIdx = Math.max(0, Math.min(sentences.length - 1, sIdx + delta)); cIdx = 0;
+  if (playing) start(); else { highlight(sIdx, 0); if (paused) $('pos').textContent += ' · 일시정지'; }
+}
+
+$('play').addEventListener('click', () => playing ? pausePlay() : start());
+$('stopBtn').addEventListener('click', stopToStart);
+$('prev').addEventListener('click', () => go(-1));
+$('next').addEventListener('click', () => go(1));
+$('again').addEventListener('click', () => { cIdx = 0; start(); });
+
+document.addEventListener('keydown', e => {
+  const inField = ['SELECT','INPUT','TEXTAREA'].includes(e.target.tagName);
+  if (tab === 'listen' && !inField) {
+    if (e.code === 'Space') { e.preventDefault(); playing ? pausePlay() : start(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+    else if (e.key === 'r' || e.key === 'R') { cIdx = 0; start(); }
+  }
+  if (tab === 'dict' && !inField) {
+    if (e.code === 'Space') { e.preventDefault(); dPlay(1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); dStep(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); dStep(-1); }
+    else if (e.key === 'r' || e.key === 'R') { dPlay(1); }
+    else if (e.key === 's' || e.key === 'S') { dPlay(0.75); }
+    else if (e.key === 'h' || e.key === 'H') { if (typeof dHint === 'function') dHint(); }
+  }
+  if (tab === 'speak' && !inField) {
+    if (e.code === 'Space') { e.preventDefault(); $('spRec').click(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); if (spIdx < sentences.length - 1) spGo(spIdx + 1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); if (spIdx > 0) spGo(spIdx - 1); }
+    else if (e.key === 'r' || e.key === 'R') { playNative(); }
+    else if (e.key === 'm' || e.key === 'M') { playMine(); }
+  }
+  // Global: Escape stops all playback, number keys switch tabs
+  if (e.key === 'Escape') { stopAll(); }
+  if (!inField && e.key >= '1' && e.key <= '4') {
+    const tabs = ['listen','dict','speak','words'];
+    setTab(tabs[+e.key - 1]);
+  }
+});
+$('pos').textContent = `문장 1 / ${sentences.length}`;
+
+// ================= dictation =================
+var tab = 'listen', dIdx = 0, dResults = [];
+const dEls = id => document.getElementById(id);
+
+function norm(w){
+  return w.toLowerCase().replace(/[’‘`]/g,"'").replace(/[“”"]/g,'')
+    .replace(/(\d),(?=\d{3}\b)/g,'$1').replace(/^[^\w']+|[^\w']+$/g,'').replace(/^'+|'+$/g,'');
+}
+function tokenize(text){
+  return text.replace(/%/g,' percent').replace(/[—–]/g,' ').replace(/(\w)-(?=\w)/g,'$1 ')
+    .split(/\s+/).map(w => ({raw: w.replace(/^[("“‘]+|[)"”’,.;:!?]+$/g,''), n: norm(w)})).filter(t => t.n);
+}
+// ---- number normalization (forty = 40, five thousand = 5000, etc.)
+const W2N = {zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,
+  ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,
+  seventeen:17,eighteen:18,nineteen:19,twenty:20,thirty:30,forty:40,fifty:50,
+  sixty:60,seventy:70,eighty:80,ninety:90,hundred:100,thousand:1000,million:1e6,billion:1e9,trillion:1e12};
+function numNorm(tokens){
+  const out = []; let i = 0;
+  while (i < tokens.length) {
+    if (W2N[tokens[i].n] !== undefined) {
+      let total = 0, cur = 0, start = i;
+      while (i < tokens.length && W2N[tokens[i].n] !== undefined) {
+        const v = W2N[tokens[i].n];
+        if (v === 100) cur = (cur || 1) * 100;
+        else if (v >= 1000) { total += (cur || 1) * v; cur = 0; }
+        else cur += v;
+        i++;
+      }
+      total += cur;
+      out.push({raw: tokens[start].raw, n: String(total)});
+    } else {
+      // Also normalize pure digit tokens so "40,000,000" (already stripped to "40000000") matches
+      out.push(tokens[i]); i++;
+    }
+  }
+  return out;
+}
+
+function diff(ref, hyp){
+  ref = numNorm(ref); hyp = numNorm(hyp);
+  const n = ref.length, m = hyp.length;
+  const L = Array.from({length: n+1}, () => new Int16Array(m+1));
+  for (let i = n-1; i >= 0; i--) for (let j = m-1; j >= 0; j--)
+    L[i][j] = ref[i].n === hyp[j].n ? L[i+1][j+1] + 1 : Math.max(L[i+1][j], L[i][j+1]);
+  const ops = []; let i = 0, j = 0;
+  while (i < n && j < m) {
+    if (ref[i].n === hyp[j].n) { ops.push(['eq', ref[i].raw]); i++; j++; }
+    else if (L[i+1][j] >= L[i][j+1]) { ops.push(['miss', ref[i].raw]); i++; }
+    else { ops.push(['extra', hyp[j].raw]); j++; }
+  }
+  while (i < n) ops.push(['miss', ref[i++].raw]);
+  while (j < m) ops.push(['extra', hyp[j++].raw]);
+  // group runs so wrong words appear before the correct ones
+  const out = []; let k = 0;
+  while (k < ops.length) {
+    if (ops[k][0] === 'eq') { out.push(ops[k++]); continue; }
+    const ex = [], mi = [];
+    while (k < ops.length && ops[k][0] !== 'eq') (ops[k][0] === 'extra' ? ex : mi).push(ops[k++]);
+    out.push(...ex, ...mi);
+  }
+  return {ops: out, score: n ? L[0][0] / n : 0, extra: m - L[0][0]};
+}
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sentText = i => sentences[i].chunks.join(' ');
+
+var autoN = 1;
+try { const a = localStorage.getItem('lp-auto'); if (a !== null && [0,1,5,10].includes(+a)) autoN = +a; } catch(e){}
+document.querySelectorAll('[data-auto]').forEach(b => {
+  b.setAttribute('aria-pressed', +b.dataset.auto === autoN);
+  b.addEventListener('click', () => {
+    autoN = +b.dataset.auto;
+    document.querySelectorAll('[data-auto]').forEach(x => x.setAttribute('aria-pressed', x === b));
+    try { localStorage.setItem('lp-auto', autoN); } catch(e){}
+  });
+});
+const setRep = s => { const el = document.getElementById('dRep'); if (el) el.textContent = s; };
+
+async function dAutoPlay(){
+  if (!synth) return;
+  token++; synth.cancel(); setRep('');
+  if (!autoN) return;
+  const t = token;
+  if (!await wait(60, t)) return;
+  for (let i = 0; i < autoN; i++) {
+    if (autoN > 1) setRep(`${i + 1} / ${autoN}회 재생 중`);
+    if (!await speak(sentText(dIdx), t)) return;
+    if (i < autoN - 1 && !await wait(1200, t)) return;
+  }
+  if (t === token) setRep('');
+}
+function dStop(){ token++; if (synth) synth.cancel(); setRep(''); }
+
+function dPlay(mul){
+  if (!synth) return;
+  token++; synth.cancel(); setRep(''); const t = token;
+  setTimeout(() => speak(sentText(dIdx), t, mul), 60);
+}
+async function dPlayChunks(){
+  if (!synth) return;
+  token++; synth.cancel(); setRep(''); const t = token;
+  await wait(60, t);
+  for (const c of sentences[dIdx].chunks) {
+    if (!await speak(c, t)) return;
+    if (!await wait(Math.max(600, +gapEl.value * 1000), t)) return;
+  }
+}
+function scoreClass(s){ return s >= 0.9 ? 's-hi' : s >= 0.6 ? 's-mid' : 's-lo'; }
+function renderDots(){
+  const box = dEls('dots'); box.innerHTML = '';
+  const bks = typeof getBookmarks === 'function' ? getBookmarks() : [];
+  sentences.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.className = 'dot' + (i === dIdx ? ' cur' : '') + (dResults[i] ? ' ' + scoreClass(dResults[i].score) : '') + (bks.includes(i) ? ' s-bk' : '');
+    b.textContent = i + 1;
+    b.setAttribute('aria-label', `문장 ${i+1}` + (dResults[i] ? `, 정확도 ${Math.round(dResults[i].score*100)}%` : '') + (bks.includes(i) ? ', 북마크됨' : ''));
+    if (i === dIdx) b.setAttribute('aria-current', 'true');
+    b.addEventListener('click', () => dGo(i));
+    box.appendChild(b);
+  });
+  // Auto-scroll dots to show current
+  const curDot = box.querySelector('.dot.cur');
+  if (curDot) curDot.scrollIntoView({block:'nearest', inline:'center', behavior:'smooth'});
+  const done = dResults.filter(Boolean);
+  const avg = done.length ? Math.round(done.reduce((a, r) => a + r.score, 0) / done.length * 100) : null;
+  dEls('dStat').textContent = done.length ? `완료 ${done.length}/${sentences.length} · 평균 ${avg}%` : '';
+  dEls('dSummary').textContent = done.length === sentences.length && sentences.length
+    ? `모든 문장을 마쳤어요. 평균 정확도 ${avg}%. 빨간색·노란색 칸을 다시 눌러 복습해 보세요.` : '';
+}
+function showResult(r){
+  dEls('dScore').textContent = `정확도 ${Math.round(r.score * 100)}%` + (r.extra ? ` (불필요한 단어 ${r.extra}개)` : '');
+  dEls('dDiff').innerHTML = r.ops.map(([t, w]) =>
+    t === 'eq' ? `<span class="w">${esc(w)}</span>` : t === 'miss' ? `<ins>${esc(w)}</ins>` : `<del>${esc(w)}</del>`).join(' ');
+  dEls('dResult').hidden = false; dEls('dAnswer').hidden = true;
+}
+function dGo(i){
+  clearTimeout(dAdvanceTimer);
+  if (typeof hintLevel !== 'undefined') hintLevel = 0;
+  dIdx = Math.max(0, Math.min(sentences.length - 1, i));
+  const r = dResults[dIdx];
+  dEls('dIn').value = r ? r.input : '';
+  dEls('dResult').hidden = !r; dEls('dAnswer').hidden = true;
+  if (r) showResult(r);
+  dEls('dPos').innerHTML = `문장 ${dIdx + 1} / ${sentences.length} <button class="bk-star${typeof isBookmarked==='function'&&isBookmarked(dIdx)?' on':''}" onclick="toggleBookmark(${dIdx});renderDots();this.classList.toggle('on')" aria-label="북마크 토글">★</button>`;
+  renderDots();
+  dEls('dIn').focus({preventScroll: true});
+  dAutoPlay();
+}
+var dAdvanceTimer = 0;
+function dCheck(){
+  clearTimeout(dAdvanceTimer);
+  const input = dEls('dIn').value.trim();
+  if (!input) { dEls('dIn').focus(); return; }
+  dStop();
+  const r = diff(tokenize(sentText(dIdx)), tokenize(input));
+  r.input = input;
+  dResults[dIdx] = r;
+  saveDictInput(dIdx, input);
+  showResult(r); renderDots();
+  const scoreEl = dEls('dScore');
+  if (r.score >= 0.9 && dIdx < sentences.length - 1) {
+    scoreEl.classList.add('flash-good');
+    setTimeout(() => scoreEl.classList.remove('flash-good'), 700);
+    dAdvanceTimer = setTimeout(() => dStep(1), 1800);
+  }
+}
+function resetDict(){
+  dResults = []; dIdx = 0;
+  if (tab === 'dict') dGo(0);
+}
+
+dEls('dPlay').addEventListener('click', () => dPlay(1));
+dEls('dSlow').addEventListener('click', () => dPlay(0.75));
+dEls('dChunk').addEventListener('click', dPlayChunks);
+dEls('dCheck').addEventListener('click', dCheck);
+dEls('dReveal').addEventListener('click', () => {
+  const a = dEls('dAnswer'); a.textContent = sentText(dIdx); a.hidden = !a.hidden;
+});
+// Hint: show first letters of each word progressively
+var hintLevel = 0;
+function dHint(){
+  const words = sentText(dIdx).split(/\s+/);
+  hintLevel = Math.min(hintLevel + 1, 3);
+  const hint = words.map(w => {
+    const clean = w.replace(/^[^a-zA-Z0-9]*/, '');
+    const prefix = w.slice(0, w.length - clean.length);
+    const shown = clean.slice(0, hintLevel);
+    return prefix + shown + '·'.repeat(Math.max(0, clean.length - hintLevel));
+  }).join(' ');
+  const el = dEls('dAnswer');
+  el.textContent = `힌트 (${hintLevel}글자): ${hint}`;
+  el.hidden = false;
+}
+dEls('dHint').addEventListener('click', dHint);
+
+dEls('dPrev').addEventListener('click', () => dStep(-1));
+dEls('dNext').addEventListener('click', () => dStep(1));
+var weakOnly = false;
+const isWeak = i => !(dResults[i] && dResults[i].score >= 0.9);
+function dStep(dir){
+  const n = sentences.length; let i = dIdx + dir;
+  if (weakOnly) while (i >= 0 && i < n && !isWeak(i)) i += dir;
+  if (i < 0 || i >= n) { toast(dir > 0 ? (weakOnly ? '남은 90% 미만 문장이 없어요.' : '마지막 문장이에요.') : '첫 문장이에요.'); return; }
+  dGo(i);
+}
+dEls('dWeak').addEventListener('click', () => {
+  weakOnly = !weakOnly; dEls('dWeak').setAttribute('aria-pressed', weakOnly);
+  if (weakOnly && !isWeak(dIdx)) {
+    const f = sentences.findIndex((_, i) => isWeak(i));
+    if (f === -1) toast('모든 문장이 90% 이상이에요.'); else dGo(f);
+  }
+});
+dEls('dIn').addEventListener('keydown', e => {
+  if (e.isComposing || e.keyCode === 229) return;
+  if (e.key === 'Enter' && e.shiftKey) { e.preventDefault(); dPlay(1); }
+  else if (e.key === 'Enter') {
+    e.preventDefault();
+    const r = dResults[dIdx];
+    if (r && r.input === dEls('dIn').value.trim() && !dEls('dResult').hidden) dStep(1);
+    else dCheck();
+  }
+});
+
+// ================= tabs =================
+function stopAll(){
+  stop(); if (paused) { paused = false; setPlayUI(); }
+  if (typeof recState !== 'undefined' && recState) stopRec(false);
+  if (typeof audioEl !== 'undefined') { try { audioEl.pause(); } catch(e){} }
+}
+function setTab(t){
+  const prev = tab; tab = t;
+  stopAll(); tipHide();
+  if (prev === 'speak' && t !== 'speak') releaseMic();
+  document.querySelectorAll('[data-tab]').forEach(x => x.setAttribute('aria-pressed', x.dataset.tab === t));
+  document.body.className = 'mode-' + t;
+  ['dict', 'speak', 'words'].forEach(k => { $(k).hidden = k !== t; $(k + 'Sub').hidden = k !== t; });
+  $('addWord').hidden = true;
+  if (t === 'dict') { const next = sentences.findIndex((_, i) => !dResults[i]); dGo(next === -1 ? 0 : next); }
+  if (t === 'speak') spGo(spIdx);
+  if (t === 'words') renderWords();
+}
+document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
+document.body.className = 'mode-listen';
+
+document.querySelectorAll('[data-tr]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('[data-tr]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  passage.classList.toggle('hide-trans', b.dataset.tr === 'hide');
+}));
+
+let toastT = 0;
+function toast(s){ const t = $('toast'); t.textContent = s; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2400); }
+function mkBtn(label, fn, extra, aria){
+  const b = document.createElement('button'); b.className = 'btn small' + (extra ? ' ' + extra : '');
+  b.textContent = label; if (aria) b.setAttribute('aria-label', aria); b.addEventListener('click', fn); return b;
+}
+function renderOps(ops){
+  return ops.map(([t, w]) => t === 'eq' ? `<span class="w">${esc(w)}</span>` : t === 'miss' ? `<ins>${esc(w)}</ins>` : `<del>${esc(w)}</del>`).join(' ');
+}
+
+// ================= speaking =================
+var spIdx = 0, spMode = 'manual', recState = null, micStream = null;
+const recordings = new Map();           // `${passageId}:${i}` -> {url, ext}
+const audioEl = new Audio();
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let srBroken = !SR, srWhy = SR ? '' : 'unsupported';
+const spKey = i => `${lib ? lib.currentId : ''}:${i}`;
+const spMsg = s => { $('spMsg').textContent = s; };
+const heardOf = i => { const it = curItem(); return it && it.speak ? it.speak[i] : null; };
+const spScoreOf = i => { const h = heardOf(i); return h ? diff(tokenize(sentText(i)), tokenize(h)).score : null; };
+function spRecLabel(){ $('spRec').textContent = recState ? '녹음 정지' : (spMode === 'after' ? '듣고 녹음하기' : '녹음 시작'); }
+
+function spRender(){
+  const n = sentences.length; if (!n) return;
+  spIdx = Math.max(0, Math.min(n - 1, spIdx));
+  $('spText').textContent = sentText(spIdx);
+  $('spPos').textContent = `문장 ${spIdx + 1} / ${n}`;
+  const box = $('spDots'); box.innerHTML = '';
+  const scores = [];
+  sentences.forEach((_, i) => {
+    const s = spScoreOf(i); if (s != null) scores.push(s);
+    const b = document.createElement('button');
+    b.className = 'dot' + (i === spIdx ? ' cur' : '') + (s != null ? ' ' + scoreClass(s) : recordings.has(spKey(i)) ? ' s-rec' : '');
+    b.textContent = i + 1;
+    b.setAttribute('aria-label', `문장 ${i + 1}` + (s != null ? `, 인식 정확도 ${Math.round(s * 100)}%` : recordings.has(spKey(i)) ? ', 녹음 있음' : ''));
+    if (i === spIdx) b.setAttribute('aria-current', 'true');
+    b.addEventListener('click', () => spGo(i));
+    box.appendChild(b);
+  });
+  $('spStat').textContent = scores.length ? `인식 ${scores.length}/${n} · 평균 ${Math.round(scores.reduce((a, b) => a + b, 0) / scores.length * 100)}%` : '';
+  const rec = recordings.get(spKey(spIdx));
+  $('spMine').disabled = !rec; $('spBoth').disabled = !rec;
+  const dl = $('spDl');
+  if (rec) { dl.href = rec.url; dl.download = `sentence-${spIdx + 1}.${rec.ext}`; dl.hidden = false; } else dl.hidden = true;
+  spRecLabel();
+}
+function showSpeakResult(i){
+  const h = heardOf(i);
+  if (!h) { $('spResult').hidden = true; return; }
+  const r = diff(tokenize(sentText(i)), tokenize(h));
+  $('spScore').textContent = `인식 정확도 ${Math.round(r.score * 100)}%`;
+  $('spDiff').innerHTML = renderOps(r.ops);
+  $('spResult').hidden = false;
+}
+function spGo(i){
+  if (recState) stopRec(false);
+  token++; if (synth) synth.cancel(); audioEl.pause();
+  spIdx = i; spMsg('');
+  spRender(); showSpeakResult(spIdx);
+}
+function playNative(){
+  if (!synth) return Promise.resolve(0);
+  audioEl.pause(); token++; synth.cancel();
+  const t = token, t0 = performance.now();
+  return wait(60, t).then(ok => ok ? speak(sentText(spIdx), t) : false).then(ok => ok ? performance.now() - t0 : 0);
+}
+function playMine(){
+  const rec = recordings.get(spKey(spIdx));
+  if (!rec) return Promise.resolve(false);
+  token++; if (synth) synth.cancel();
+  const t = token;
+  return new Promise(res => {
+    audioEl.pause(); audioEl.src = rec.url;
+    audioEl.onended = () => res(t === token);
+    audioEl.onerror = () => res(false);
+    audioEl.play().catch(() => res(false));
+  });
+}
+async function getMic(){
+  if (micStream && micStream.active) return micStream;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { const e = new Error('unsupported'); e.name = 'Unsupported'; throw e; }
+  micStream = await navigator.mediaDevices.getUserMedia({audio: {echoCancellation: true, noiseSuppression: true}});
+  return micStream;
+}
+function releaseMic(){ if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; } }
+function pickMime(){
+  if (!window.MediaRecorder || !MediaRecorder.isTypeSupported) return '';
+  return ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'].find(m => MediaRecorder.isTypeSupported(m)) || '';
+}
+async function startRec(autoMs){
+  if (!window.MediaRecorder) { spMsg('이 브라우저는 녹음을 지원하지 않아요. 최신 Chrome, Safari, Edge에서 열어 주세요.'); return; }
+  let stream;
+  try { stream = await getMic(); }
+  catch(e) {
+    spMsg(e.name === 'NotAllowedError' ? '마이크 권한이 거부됐어요. 주소창 옆 권한 설정에서 마이크를 허용한 뒤 다시 눌러 주세요.'
+      : e.name === 'NotFoundError' ? '마이크를 찾지 못했어요. 연결 상태를 확인해 주세요.' : '이 환경에서는 마이크를 쓸 수 없어요.');
+    return;
+  }
+  if (tab !== 'speak' || recState) return;
+  const mime = pickMime();
+  let mr;
+  try { mr = mime ? new MediaRecorder(stream, {mimeType: mime}) : new MediaRecorder(stream); }
+  catch(e) { spMsg('녹음을 시작하지 못했어요.'); return; }
+  const idx = spIdx, key = spKey(idx), parts = [];
+  const st = {mr, idx, key, heard: [], timer: 0, rec: null, raf: 0, ctx: null, keep: true, done: false, srError: ''};
+  recState = st;
+  mr.ondataavailable = e => { if (e.data && e.data.size) parts.push(e.data); };
+  mr.onstop = () => {
+    cancelAnimationFrame(st.raf); if (st.ctx) st.ctx.close().catch(() => {}); $('spMeter').style.width = '0';
+    if (!st.keep || !parts.length) return;
+    const type = mr.mimeType || mime || 'audio/webm';
+    const old = recordings.get(key); if (old) URL.revokeObjectURL(old.url);
+    const recBlob = new Blob(parts, {type});
+    recordings.set(key, {url: URL.createObjectURL(recBlob), ext: /mp4/.test(type) ? 'm4a' : /ogg/.test(type) ? 'ogg' : 'webm'});
+    // Persist to IndexedDB
+    recBlob.arrayBuffer().then(buf => saveRecToIDB(key, buf, type)).catch(() => {});
+    if (spIdx === idx && tab === 'speak') spRender();
+  };
+  mr.start();
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    st.ctx = new AC(); const an = st.ctx.createAnalyser(); an.fftSize = 512;
+    st.ctx.createMediaStreamSource(stream).connect(an);
+    const buf = new Uint8Array(an.fftSize);
+    const tick = () => { an.getByteTimeDomainData(buf); let m = 0; for (let k = 0; k < buf.length; k++) m = Math.max(m, Math.abs(buf[k] - 128));
+      $('spMeter').style.width = Math.min(100, m / 128 * 220) + '%'; st.raf = requestAnimationFrame(tick); };
+    tick();
+  } catch(e) {}
+  if (!srBroken) {
+    try {
+      const r = new SR();
+      const v = voices.find(x => x.name === voiceEl.value);
+      r.lang = v ? v.lang.replace('_', '-') : 'en-US';
+      r.continuous = true; r.interimResults = false; r.maxAlternatives = 1;
+      r.onresult = e => { for (let k = e.resultIndex; k < e.results.length; k++) if (e.results[k].isFinal) st.heard.push(e.results[k][0].transcript); };
+      r.onerror = e => {
+        if (['not-allowed', 'service-not-allowed', 'network', 'audio-capture', 'language-not-supported'].includes(e.error)) { srBroken = true; srWhy = e.error; st.srError = e.error; }
+      };
+      r.onend = () => { if (st.finished) finishRecog(st); };
+      r.start(); st.rec = r;
+    } catch(e) { srBroken = true; srWhy = 'start'; }
+  }
+  $('spRec').classList.add('on'); spRecLabel();
+  spMsg(autoMs ? `따라 말해 보세요. ${Math.round(autoMs / 1000)}초 뒤 자동으로 멈춰요.` : '녹음 중이에요. 다 말했으면 녹음 정지를 누르세요.');
+  st.timer = setTimeout(() => stopRec(true), autoMs || 30000);
+}
+function stopRec(keep){
+  const st = recState; if (!st) return;
+  recState = null; st.keep = keep; st.finished = true; clearTimeout(st.timer);
+  try { if (st.mr.state !== 'inactive') st.mr.stop(); } catch(e) {}
+  $('spRec').classList.remove('on'); spRecLabel();
+  if (!keep) { if (st.rec) { try { st.rec.abort(); } catch(e) {} } return; }
+  if (st.rec) {
+    spMsg('녹음했어요. 음성 인식 결과를 기다리는 중…');
+    try { st.rec.stop(); } catch(e) { finishRecog(st); }
+    setTimeout(() => finishRecog(st), 4000);
+  } else finishRecog(st);
+}
+function recogNote(st){
+  if (srWhy === 'unsupported') return '녹음했어요. 이 브라우저는 음성 인식을 지원하지 않아서 채점 없이 녹음만 돼요. 내 녹음 듣기로 비교해 보세요.';
+  return '녹음했어요. 이 환경에서는 음성 인식을 쓸 수 없어서' + (srWhy === 'network' ? ' (인식 서버 연결 실패)' : '') + ' 채점 없이 녹음만 돼요. 내 녹음 듣기로 비교해 보세요.';
+}
+function finishRecog(st){
+  if (st.done) return; st.done = true;
+  const heard = st.heard.join(' ').trim();
+  if (!heard) {
+    if (spIdx === st.idx) spMsg(srBroken ? recogNote(st) : '녹음했어요. 음성 인식이 말소리를 알아듣지 못했어요. 마이크에 조금 더 가까이, 또렷하게 해 보세요.');
+    return;
+  }
+  const it = curItem(); it.speak = it.speak || {}; it.speak[st.idx] = heard; it.studied = Date.now();
+  saveLib(); renderLibrary();
+  if (spIdx === st.idx && tab === 'speak') { spRender(); showSpeakResult(st.idx); spMsg('녹음했어요. 번갈아 듣기로 원어민 음성과 내 발음을 비교해 보세요.'); }
+}
+$('spNative').addEventListener('click', () => { if (recState) stopRec(true); playNative(); });
+$('spMine').addEventListener('click', () => { if (recState) stopRec(true); playMine(); });
+$('spBoth').addEventListener('click', async () => {
+  if (recState) stopRec(true);
+  if (!await playNative()) return;
+  const t = token; if (!await wait(500, t)) return;
+  await playMine();
+});
+$('spRec').addEventListener('click', async () => {
+  if (recState) { stopRec(true); return; }
+  if (spMode === 'after') {
+    spMsg('원어민 음성을 들어 보세요. 끝나면 바로 녹음이 시작돼요.');
+    const dur = await playNative();
+    if (!dur || tab !== 'speak') return;
+    await startRec(Math.max(3500, dur * 1.5 + 1500));
+  } else { token++; if (synth) synth.cancel(); audioEl.pause(); startRec(0); }
+});
+document.querySelectorAll('[data-spmode]').forEach(b => b.addEventListener('click', () => {
+  spMode = b.dataset.spmode;
+  document.querySelectorAll('[data-spmode]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  try { localStorage.setItem('lp-spmode', spMode); } catch(e) {}
+  spRecLabel();
+}));
+try { const m = localStorage.getItem('lp-spmode'); if (m === 'after') document.querySelector('[data-spmode="after"]').click(); } catch(e) {}
+$('spHide').addEventListener('click', () => {
+  const on = $('spHide').getAttribute('aria-pressed') !== 'true';
+  $('spHide').setAttribute('aria-pressed', on); $('spText').classList.toggle('veiled', on);
+});
+$('spText').addEventListener('click', () => { if ($('spText').classList.contains('veiled')) $('spHide').click(); });
+$('spPrev').addEventListener('click', () => { if (spIdx > 0) spGo(spIdx - 1); else toast('첫 문장이에요.'); });
+$('spNext').addEventListener('click', () => { if (spIdx < sentences.length - 1) spGo(spIdx + 1); else toast('마지막 문장이에요.'); });
+
+// ================= words =================
+var wScope = 'cur', wQuiz = false, lastSel = null, pendSel = null;
+const addBtn = $('addWord');
+function selInfo(){
+  const sel = getSelection(); if (!sel || sel.isCollapsed || !sel.rangeCount) return null;
+  const txt = String(sel).replace(/\s+/g, ' ').replace(/\s*\/\s*/g, ' ').trim().replace(/^[^\w']+|[^\w']+$/g, '');
+  if (!txt || txt.length > 80) return null;
+  const node = sel.anchorNode, el = node && (node.nodeType === 1 ? node : node.parentElement);
+  if (!el || !passage.contains(el)) return null;
+  const ch = el.closest('.chunk'), obj = ch && chunksFlat.find(c => c.el === ch);
+  return {txt, context: obj ? sentText(obj.s) : ''};
+}
+function placeAddBtn(){
+  const info = tab === 'listen' ? selInfo() : null;
+  if (!info) { addBtn.hidden = true; return; }
+  lastSel = info;
+  const r = getSelection().getRangeAt(0).getBoundingClientRect();
+  addBtn.hidden = false;
+  const bw = addBtn.offsetWidth, bh = addBtn.offsetHeight;
+  let top = r.top - bh - 10; if (top < 10) top = r.bottom + 10;
+  addBtn.style.top = top + 'px';
+  addBtn.style.left = Math.min(window.innerWidth - bw - 10, Math.max(10, r.left + r.width / 2 - bw / 2)) + 'px';
+}
+let selT = 0;
+document.addEventListener('selectionchange', () => { clearTimeout(selT); selT = setTimeout(placeAddBtn, 200); });
+window.addEventListener('scroll', () => { if (!addBtn.hidden) placeAddBtn(); }, {passive: true});
+addBtn.addEventListener('pointerdown', e => { e.preventDefault(); pendSel = lastSel; });
+addBtn.addEventListener('click', () => {
+  const info = selInfo() || pendSel || lastSel; pendSel = null;
+  if (!info) return;
+  addWord(info.txt, '', info.context);
+  try { getSelection().removeAllRanges(); } catch(e) {}
+  addBtn.hidden = true;
+});
+function addWord(word, note, context){
+  word = word.trim(); if (!word) return false;
+  if (lib.words.some(w => w.word.toLowerCase() === word.toLowerCase() && w.passageId === lib.currentId)) { toast(`"${word}"은(는) 이미 단어장에 있어요.`); return false; }
+  lib.words.unshift({id: uid(), word, note: note || '', context: context || '', passageId: lib.currentId, added: Date.now()});
+  saveLib(); renderLibrary(); toast(`"${word}"을(를) 단어장에 담았어요.`);
+  if (tab === 'words') renderWords();
+  return true;
+}
+function markWord(ctx, word){
+  const i = ctx.toLowerCase().indexOf(word.toLowerCase());
+  if (i < 0) return esc(ctx);
+  return esc(ctx.slice(0, i)) + '<mark>' + esc(ctx.slice(i, i + word.length)) + '</mark>' + esc(ctx.slice(i + word.length));
+}
+// highlights the whole word form in an example ("competed" marks "competition" too, not just "compet")
+function markStem(ctx, word){
+  const stem = word.toLowerCase().replace(/(ies|es|s|ed|ing)$/, '').replace(/[^a-z'-]/g, '');
+  const m = stem.length >= 3 ? new RegExp(`\\b${stem}[a-z]*`, 'i').exec(ctx) : null;
+  return m ? markWord(ctx, m[0]) : markWord(ctx, word);
+}
+function sayText(s){ if (!synth) return; audioEl.pause(); token++; synth.cancel(); const t = token; setTimeout(() => speak(s, t), 60); }
+function renderWords(){
+  const list = lib.words.filter(w => wScope === 'all' || w.passageId === lib.currentId);
+  $('wCount').textContent = `${list.length}개`;
+  const ul = $('wList'); ul.innerHTML = ''; ul.classList.toggle('quiz-on', wQuiz);
+  $('wEmpty').textContent = list.length ? '' : wScope === 'cur'
+    ? '이 지문에서 담은 단어가 없어요. 듣기 탭 본문에서 단어를 드래그하거나(휴대폰은 길게 누르기) 위 칸에 직접 입력해 추가하세요.'
+    : '아직 담은 단어가 없어요.';
+  list.forEach(w => {
+    const li = document.createElement('li'); li.className = 'w-item';
+    const head = document.createElement('div');
+    const word = document.createElement('span'); word.className = 'w-word'; word.textContent = w.word; word.lang = 'en';
+    head.appendChild(word);
+    const src = lib.items.find(x => x.id === w.passageId);
+    if (wScope === 'all' && src) { const s = document.createElement('div'); s.className = 'w-src'; s.textContent = src.title; head.appendChild(s); }
+    const acts = document.createElement('div'); acts.className = 'w-acts';
+    acts.appendChild(mkBtn('듣기', () => sayText(w.word), '', `${w.word} 듣기`));
+    if (w.context) acts.appendChild(mkBtn('문장 듣기', () => sayText(w.context), '', `${w.word}가 나온 문장 듣기`));
+    acts.appendChild(mkBtn('삭제', () => { lib.words = lib.words.filter(x => x.id !== w.id); saveLib(); renderWords(); renderLibrary(); }, 'danger', `${w.word} 삭제`));
+    const mean = document.createElement('input');
+    mean.className = 'field w-mean'; mean.value = w.note; mean.placeholder = '뜻이나 메모를 적어 두세요';
+    mean.setAttribute('aria-label', `${w.word} 뜻`);
+    mean.addEventListener('change', () => { w.note = mean.value.trim(); w.auto = false; saveLib(); });
+    li.append(head, acts, mean);
+    if (w.context) { const c = document.createElement('p'); c.className = 'w-ctx'; c.lang = 'en'; c.innerHTML = markWord(w.context, w.word); li.appendChild(c); }
+    if (w.example) {
+      const ex = document.createElement('div'); ex.className = 'w-ex';
+      ex.innerHTML = `<span class="w-ex-lbl">예문</span> <span lang="en">${markStem(w.example, w.word)}</span>`;
+      ex.appendChild(mkBtn('듣기', () => sayText(w.example), '', `${w.word} 예문 듣기`));
+      if (w.exampleKo) { const k = document.createElement('div'); k.className = 'w-ex-ko'; k.lang = 'ko'; k.textContent = w.exampleKo; ex.appendChild(k); }
+      li.appendChild(ex);
+    }
+    ul.appendChild(li);
+  });
+}
+function addManual(){
+  const w = $('wNew').value.trim(); if (!w) { $('wNew').focus(); return; }
+  if (addWord(w, $('wNewMean').value.trim(), '')) { $('wNew').value = ''; $('wNewMean').value = ''; $('wNew').focus(); }
+}
+$('wAddBtn').addEventListener('click', addManual);
+['wNew', 'wNewMean'].forEach(id => $(id).addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); addManual(); } }));
+document.querySelectorAll('[data-wscope]').forEach(b => b.addEventListener('click', () => {
+  wScope = b.dataset.wscope;
+  document.querySelectorAll('[data-wscope]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  renderWords();
+}));
+$('wQuiz').addEventListener('click', () => { wQuiz = !wQuiz; $('wQuiz').setAttribute('aria-pressed', wQuiz); renderWords(); });
+
+// ================= library =================
+const LIB_KEY = 'lp-lib';
+var lib = null, editingId = null;
+const uid = () => 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const newItem = (title, text) => { const now = Date.now(); return {id: uid(), title, text, created: now, updated: now, studied: 0, listens: 0, dict: {}}; };
+
+function seedItem(){ const it = newItem(DEFAULT_TITLE, RAW); it.id = 'default-jp-rates'; return it; }
+function loadLib(){
+  try {
+    const s = localStorage.getItem(LIB_KEY);
+    if (s) { const o = JSON.parse(s); if (o && Array.isArray(o.items) && o.items.length) return o; }
+  } catch(e){}
+  const items = [seedItem()]; let cur = items[0].id;
+  try { // carry over a passage saved by the previous version
+    const t = localStorage.getItem('lp-text'), ti = localStorage.getItem('lp-title');
+    if (t && t.trim() !== RAW.trim()) { const it = newItem(ti || '듣기 연습', t); items.unshift(it); cur = it.id; }
+  } catch(e){}
+  return {v: 1, currentId: cur, items};
+}
+function saveLib(){
+  try { localStorage.setItem(LIB_KEY, JSON.stringify(lib)); return true; }
+  catch(e){
+    try { localStorage.removeItem('lp-tr'); localStorage.setItem(LIB_KEY, JSON.stringify(lib)); return true; } catch(e2){} $('libNote').textContent = '브라우저 저장 공간에 저장하지 못했어요. 보관함을 파일로 내보내 두세요.'; return false; }
+}
+const curItem = () => lib.items.find(x => x.id === lib.currentId) || lib.items[0];
+
+function openPassage(id){
+  stopAll(); paused = false;
+  const it = lib.items.find(x => x.id === id) || lib.items[0];
+  lib.currentId = it.id; saveLib();
+  build(it.text, it.trans);
+  $('title').textContent = it.title;
+  document.title = it.title + ' · 듣기 연습';
+  sIdx = 0; cIdx = 0; clearHL();
+  dResults = [];
+  Object.entries(it.dict || {}).forEach(([k, input]) => {
+    const i = +k;
+    if (i < sentences.length && input) { const r = diff(tokenize(sentText(i)), tokenize(input)); r.input = input; dResults[i] = r; }
+  });
+  if (tab === 'dict') { const n = sentences.findIndex((_, i) => !dResults[i]); dGo(n === -1 ? 0 : n); }
+  else renderDots();
+  spIdx = 0;
+  if (tab === 'speak') spGo(0);
+  if (tab === 'words') renderWords();
+  renderLibrary();
+  if (typeof loadSavedRecordings === 'function') loadSavedRecordings();
+}
+function saveDictInput(i, input){
+  const it = curItem(); it.dict = it.dict || {}; it.dict[i] = input; it.studied = Date.now();
+  saveLib(); renderLibrary();
+}
+function markListened(){
+  const it = curItem(); it.listens = (it.listens || 0) + 1; it.studied = Date.now();
+  saveLib(); renderLibrary();
+}
+
+function itemMeta(it){
+  const sents = parseText(it.text), n = sents.length;
+  const scores = Object.entries(it.dict || {}).filter(([k, v]) => +k < n && v)
+    .map(([k, v]) => diff(tokenize(sents[+k].chunks.join(' ')), tokenize(v)).score);
+  const parts = [`${n}문장`, `전체 듣기 ${it.listens || 0}회`];
+  if (scores.length) parts.push(`받아쓰기 ${scores.length}/${n} · 평균 ${Math.round(scores.reduce((a, b) => a + b, 0) / scores.length * 100)}%`);
+  const spN = Object.keys(it.speak || {}).filter(k => +k < n).length;
+  if (spN) parts.push(`말하기 ${spN}/${n}`);
+  const wN = (lib.words || []).filter(w => w.passageId === it.id).length;
+  if (wN) parts.push(`단어 ${wN}개`);
+  if (it.studied) { const d = new Date(it.studied); parts.push(`${d.getMonth() + 1}월 ${d.getDate()}일 학습`); }
+  else parts.push('아직 학습 전');
+  return parts.join(' · ');
+}
+function renderLibrary(){
+  if (!lib) return;
+  const ul = $('libList'); ul.innerHTML = '';
+  [...lib.items].sort((a, b) => (b.studied || b.created) - (a.studied || a.created)).forEach(it => {
+    const li = document.createElement('li');
+    li.className = 'lib-item' + (it.id === lib.currentId ? ' cur' : '');
+    const open = document.createElement('button'); open.className = 'lib-open';
+    open.innerHTML = `<span class="lib-title"></span><span class="lib-meta"></span>`;
+    const titleSpan = open.querySelector('.lib-title');
+    titleSpan.textContent = it.title;
+    // Add completion badge
+    const sents = parseText(it.text), sn = sents.length;
+    const dictDone = Object.entries(it.dict || {}).filter(([k, v]) => +k < sn && v).length;
+    if (dictDone === sn && sn > 0) { const badge = document.createElement('span'); badge.className = 'lib-badge complete'; badge.textContent = '완료'; titleSpan.appendChild(badge); }
+    else if (dictDone > 0) { const badge = document.createElement('span'); badge.className = 'lib-badge partial'; badge.textContent = `${Math.round(dictDone/sn*100)}%`; titleSpan.appendChild(badge); }
+    open.querySelector('.lib-meta').textContent = itemMeta(it);
+    open.addEventListener('click', () => { openPassage(it.id); toggleLib(false); window.scrollTo({top: 0}); });
+    const ed = document.createElement('button'); ed.className = 'btn'; ed.textContent = '편집';
+    ed.setAttribute('aria-label', `${it.title} 편집`);
+    ed.addEventListener('click', () => openEditor(it.id));
+    const del = document.createElement('button'); del.className = 'btn danger'; del.textContent = '삭제';
+    del.setAttribute('aria-label', `${it.title} 삭제`);
+    del.addEventListener('click', () => deleteItem(it.id));
+    li.append(open, ed, del); ul.appendChild(li);
+  });
+}
+function deleteItem(id){
+  const it = lib.items.find(x => x.id === id); if (!it) return;
+  if (!confirm(`"${it.title}" 지문과 학습 기록을 삭제할까요?`)) return;
+  lib.items = lib.items.filter(x => x.id !== id);
+  if (!lib.items.length) lib.items.push(seedItem());
+  if (lib.currentId === id) openPassage(lib.items[0].id); else { saveLib(); renderLibrary(); }
+  $('libNote').textContent = `"${it.title}"을(를) 삭제했어요.`;
+}
+function toggleLib(show){
+  const el = $('lib'); el.hidden = !show; $('libBtn').setAttribute('aria-expanded', show);
+  if (show) { $('editor').hidden = true; $('libNote').textContent = ''; renderLibrary(); }
+}
+
+// ---- editor
+function openEditor(id){
+  stop(); toggleLib(false);
+  editingId = id;
+  const it = id ? lib.items.find(x => x.id === id) : null;
+  $('edHead').textContent = it ? '지문 편집' : '새 지문 추가';
+  $('titleIn').value = it ? it.title : '';
+  $('textIn').value = it ? it.text : '';
+  $('transIn').value = it ? (it.trans || '') : '';
+  $('edNote').textContent = it ? '본문을 고치면 이 지문의 받아쓰기 기록은 초기화돼요.' : '저장하면 보관함에 추가되고 바로 이 지문으로 바뀌어요.';
+  $('editor').hidden = false; window.scrollTo({top: 0});
+  (it ? $('textIn') : $('titleIn')).focus();
+}
+$('libBtn').addEventListener('click', () => toggleLib($('lib').hidden));
+$('editBtn').addEventListener('click', () => openEditor(lib.currentId));
+$('newBtn').addEventListener('click', () => openEditor(null));
+$('cancelBtn').addEventListener('click', () => { $('editor').hidden = true; });
+$('applyBtn').addEventListener('click', () => {
+  const text = $('textIn').value.trim();
+  const trans = $('transIn').value.trim();
+  if (!text) { $('edNote').textContent = '본문이 비어 있어요. 영어 지문을 붙여넣어 주세요.'; $('textIn').focus(); return; }
+  if (!parseText(text).length) { $('edNote').textContent = '문장을 찾지 못했어요. 영어 문장을 붙여넣었는지 확인해 주세요.'; return; }
+  const title = $('titleIn').value.trim() || text.split(/\s+/).slice(0, 6).join(' ').replace(/\//g, '') + '…';
+  let it = editingId && lib.items.find(x => x.id === editingId);
+  if (it) {
+    if (it.text !== text) { it.dict = {}; it.speak = {}; it.bookmarks = []; }
+    it.title = title; it.text = text; it.updated = Date.now();
+  } else { it = newItem(title, text); lib.items.push(it); }
+  it.trans = trans;
+  $('editor').hidden = true;
+  openPassage(it.id);
+});
+$('dClear').addEventListener('click', () => {
+  const it = curItem();
+  if (!Object.keys(it.dict || {}).length) return;
+  if (!confirm('이 지문의 받아쓰기 기록을 모두 지울까요?')) return;
+  it.dict = {}; saveLib(); dResults = []; dGo(0); renderLibrary();
+});
+
+// ---- export / import
+$('exportBtn').addEventListener('click', () => {
+  const d = new Date(), stamp = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+  const blob = new Blob([JSON.stringify({app: 'listening-practice', v: 1, exported: d.toISOString(), items: lib.items, words: lib.words || []}, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = `listening-library-${stamp}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  $('libNote').textContent = `지문 ${lib.items.length}개를 파일로 내보냈어요. 다른 기기에서 "파일에서 불러오기"로 옮길 수 있어요.`;
+});
+$('importBtn').addEventListener('click', () => $('importIn').click());
+$('importIn').addEventListener('change', e => {
+  const f = e.target.files[0]; e.target.value = '';
+  if (!f) return;
+  const rd = new FileReader();
+  rd.onload = () => {
+    let data;
+    try { data = JSON.parse(rd.result); } catch(err) { $('libNote').textContent = '파일을 읽지 못했어요. 이 페이지에서 내보낸 .json 파일인지 확인해 주세요.'; return; }
+    const items = (data && Array.isArray(data.items)) ? data.items : [];
+    let added = 0, updated = 0;
+    items.forEach(x => {
+      if (!x || typeof x.text !== 'string' || !x.text.trim()) return;
+      const clean = {id: typeof x.id === 'string' ? x.id : uid(), title: String(x.title || '듣기 연습'), text: x.text,
+        created: +x.created || Date.now(), updated: +x.updated || Date.now(), studied: +x.studied || 0,
+        listens: +x.listens || 0, dict: (x.dict && typeof x.dict === 'object') ? x.dict : {},
+        trans: typeof x.trans === 'string' ? x.trans : '', speak: (x.speak && typeof x.speak === 'object') ? x.speak : {},
+        bookmarks: Array.isArray(x.bookmarks) ? x.bookmarks : []};
+      if (typeof x.daily === 'string') clean.daily = x.daily;
+      const ex = lib.items.find(y => y.id === clean.id);
+      if (!ex) { lib.items.push(clean); added++; }
+      else if (clean.updated > ex.updated || (clean.studied || 0) > (ex.studied || 0)) { Object.assign(ex, clean); updated++; }
+    });
+    saveLib(); renderLibrary();
+    let wAdded = 0;
+    (Array.isArray(data.words) ? data.words : []).forEach(w => {
+      if (!w || typeof w.word !== 'string' || !w.word.trim()) return;
+      if (lib.words.some(y => y.id === w.id)) return;
+      lib.words.push({id: typeof w.id === 'string' ? w.id : uid(), word: w.word, note: String(w.note || ''),
+        context: String(w.context || ''), passageId: String(w.passageId || ''), added: +w.added || Date.now(),
+        example: String(w.example || ''), exampleKo: String(w.exampleKo || ''), auto: !!w.auto});
+      wAdded++;
+    });
+    if (wAdded) saveLib();
+    $('libNote').textContent = (added || updated || wAdded)
+      ? `새 지문 ${added}개 추가, ${updated}개 최신 내용으로 갱신, 단어 ${wAdded}개 추가했어요.` : '새로 추가할 내용이 없었어요.';
+    if (updated && lib.items.some(y => y.id === lib.currentId)) openPassage(lib.currentId);
+  };
+  rd.readAsText(f);
+});
+
+// ================= Korean translation (sentence hover) =================
+// Free endpoints with CORS and no key: Google's public gtx endpoint first, MyMemory as a fallback.
+const TR_KEY = 'lp-tr', TR_MAX = 1500;
+var trCache = {};
+try { trCache = JSON.parse(localStorage.getItem(TR_KEY) || '{}') || {}; } catch(e){ trCache = {}; }
+const trPending = new Map();
+const trKey = t => t.replace(/\//g, ' ').replace(/\s+/g, ' ').trim();
+function saveTr(){
+  const keys = Object.keys(trCache);
+  if (keys.length > TR_MAX) keys.slice(0, keys.length - TR_MAX).forEach(k => delete trCache[k]);
+  try { localStorage.setItem(TR_KEY, JSON.stringify(trCache)); } catch(e){}
+}
+async function fetchJSON(url, ms = 8000){
+  const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), ms);
+  try { const r = await fetch(url, {signal: ctl.signal}); if (!r.ok) throw new Error('HTTP ' + r.status); return await r.json(); }
+  finally { clearTimeout(t); }
+}
+function translateKo(text){
+  text = trKey(text);
+  if (!text) return Promise.resolve('');
+  if (trCache[text]) return Promise.resolve(trCache[text]);
+  if (trPending.has(text)) return trPending.get(text);
+  const q = encodeURIComponent(text);
+  const p = (async () => {
+    let ko = '';
+    try {
+      const d = await fetchJSON(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ko&dt=t&q=${q}`);
+      ko = (d[0] || []).map(x => x[0] || '').join('').trim();
+    } catch(e){}
+    if (!ko) {
+      try {
+        const d = await fetchJSON(`https://api.mymemory.translated.net/get?q=${q}&langpair=en|ko`);
+        if (d && d.responseStatus == 200) ko = String(d.responseData.translatedText || '').trim();
+      } catch(e){}
+    }
+    if (ko && text.length <= 400) { trCache[text] = ko; saveTr(); }
+    return ko;
+  })();
+  trPending.set(text, p);
+  p.finally(() => trPending.delete(text));
+  return p;
+}
+
+let tipSent = -1, tipTimer = 0, tipTouchT = 0, lastPointer = 'mouse';
+document.addEventListener('pointerdown', e => { lastPointer = e.pointerType; }, {capture: true, passive: true});
+function placeTip(anchor){
+  const tip = $('sentTip'), r = anchor.getBoundingClientRect(), tr = tip.getBoundingClientRect();
+  let top = r.bottom + 8; if (top + tr.height > window.innerHeight - 100) top = Math.max(8, r.top - tr.height - 8);
+  const left = Math.max(16, Math.min(r.left, window.innerWidth - tr.width - 16));
+  tip.style.top = top + 'px'; tip.style.left = left + 'px';
+}
+function tipShow(si, anchor){
+  if (tab !== 'listen' || !sentences[si] || passage.classList.contains('blind')) return;
+  clearTimeout(tipTimer); clearTimeout(tipTouchT);
+  document.querySelectorAll('.chunk.sent-hover').forEach(x => x.classList.remove('sent-hover'));
+  sentences[si].chunkObjs.forEach(c => c.el.classList.add('sent-hover'));
+  tipSent = si;
+  tipTimer = setTimeout(async () => {
+    if (tipSent !== si) return;
+    const tip = $('sentTip'), text = sentText(si), cached = trCache[trKey(text)];
+    tip.classList.toggle('muted', !cached);
+    tip.textContent = cached || '번역 불러오는 중…';
+    tip.hidden = false; placeTip(anchor);
+    if (lastPointer === 'touch') tipTouchT = setTimeout(tipHide, 4000);   // no mouseleave on touch
+    if (cached) return;
+    const ko = await translateKo(text);
+    if (tipSent !== si || tip.hidden) return;
+    tip.classList.toggle('muted', !ko);
+    tip.textContent = ko || '번역을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.';
+    placeTip(anchor);
+  }, 350);
+}
+function tipHide(){
+  clearTimeout(tipTimer); clearTimeout(tipTouchT); tipSent = -1;
+  const tip = document.getElementById('sentTip'); if (tip) tip.hidden = true;
+  document.querySelectorAll('.chunk.sent-hover').forEach(x => x.classList.remove('sent-hover'));
+}
+window.addEventListener('scroll', tipHide, {passive: true});
+
+// ================= auto vocabulary =================
+// Picks ~10 useful words from the passage: drops proper nouns and very common words, then ranks the rest
+// by Datamuse frequency (rarer first, but not obscure). Meaning via translateKo, example via Tatoeba, then Wiktionary.
+const COMMON = new Set(('about above after again against almost along already also although always among another answer around '
+ + 'because become before began begin being below between both bring brought build built called came cannot change children '
+ + 'close come comes could country course different does doing done during early either enough even every example family '
+ + 'father first follow found friend from given going great group happen having heard here high himself house however important '
+ + 'including into itself just keep known large later least leave left less life little long look made make making many might '
+ + 'more most mother much must name near need never next night nothing number often only open other others over part people '
+ + 'place point possible problem public quite rather really right said same school second seem seen several shall should show '
+ + 'since small something sometimes state still story such system take taken than that their them themselves then there these '
+ + 'they thing things think this those though thought three through time times today together took toward turn under until '
+ + 'upon used using very want water week well went were what when where whether which while white whole whose will with within '
+ + 'without woman women word words work world would write year years young your yourself again began being called could first '
+ + 'later where while today years since month months percent million billion according company companies government').split(' '));
+function wordCandidates(it){
+  const seen = new Set(), out = [];
+  const have = new Set(lib.words.filter(w => w.passageId === it.id).map(w => w.word.toLowerCase()));
+  (it.text.replace(/\//g, ' ').match(/\p{L}[\p{L}'’-]*\p{L}/gu) || []).forEach(tok => {
+    if (/[^A-Za-z'’-]/.test(tok)) return;                              // accented / foreign words
+    if (/^[A-Z]/.test(tok) || /[A-Z]/.test(tok.slice(1))) return;   // proper nouns, acronyms (sentence starts too)
+    const w = tok.toLowerCase().replace(/['’]s$/, '');
+    if (w.length < 5 || /['’]/.test(w) || /^-|-$/.test(w) || COMMON.has(w) || seen.has(w) || have.has(w)) return;
+    seen.add(w); out.push(w);
+  });
+  return out;
+}
+async function wordFreq(w){
+  try { const d = await fetchJSON(`https://api.datamuse.com/words?sp=${encodeURIComponent(w)}&md=f&max=1`, 6000);
+    const tag = d && d[0] && d[0].word === w && (d[0].tags || []).find(t => t.startsWith('f:'));
+    return tag ? +tag.slice(2) : null; } catch(e){ return null; }
+}
+function lemmaGuesses(w){
+  const g = [w];
+  if (/ies$/.test(w)) g.push(w.slice(0, -3) + 'y');
+  else if (/(ses|xes|ches|shes)$/.test(w)) g.push(w.slice(0, -2));
+  else if (/s$/.test(w) && !/ss$/.test(w)) g.push(w.slice(0, -1));
+  if (/ied$/.test(w)) g.push(w.slice(0, -3) + 'y');
+  else if (/ed$/.test(w)) g.push(w.slice(0, -2), w.slice(0, -1));
+  if (/ing$/.test(w)) g.push(w.slice(0, -3), w.slice(0, -3) + 'e');
+  return g;
+}
+const goodSentence = t => /^[A-Z"“]/.test(t) && /[.?!]["”]?$/.test(t) && t.split(' ').length >= 4 && t.split(' ').length <= 25;
+// Tatoeba: real sentences, many with human Korean translations. Prefers ones with the exact word form.
+async function tatoebaExample(w){
+  try {
+    const d = await fetchJSON(`https://api.tatoeba.org/unstable/sentences?lang=eng&q=${encodeURIComponent(w)}&sort=relevance&limit=20`, 7000);
+    const re = new RegExp(`\\b${w}\\b`, 'i');
+    const rows = ((d && d.data) || []).filter(x => goodSentence(x.text || '')).map(x => ({
+      text: x.text, ko: (x.translations || []).flat().find(t => t && t.lang === 'kor')?.text || '', exact: re.test(x.text)}));
+    const fit = x => { const n = x.text.split(' ').length; return n >= 6 && n <= 16; };   // not too short, not too long
+    rows.sort((a, b) => (b.exact - a.exact) || (fit(b) - fit(a)) || (!!b.ko - !!a.ko));
+    return rows[0] || null;
+  } catch(e){ return null; }
+}
+async function exampleFor(w){
+  const t = await tatoebaExample(w);
+  if (t && t.ko) return {example: t.text, exampleKo: t.ko};
+  const ex = (t && t.text) || await wikiExample(w);
+  return {example: ex, exampleKo: ex ? await translateKo(ex) : ''};
+}
+async function wikiExample(w){
+  for (const lem of lemmaGuesses(w)) {
+    try {
+      const d = await fetchJSON(`https://en.wiktionary.org/api/rest_v1/page/definition/${encodeURIComponent(lem)}`, 7000);
+      for (const sec of (d.en || [])) for (const df of (sec.definitions || [])) for (const ex of (df.examples || [])) {
+        const t = htmlText(ex).replace(/\s+/g, ' ').trim();
+        if (goodSentence(t)) return t;
+      }
+    } catch(e){}
+  }
+  return '';
+}
+function contextFor(w, sents){
+  const re = new RegExp(`\\b${w}\\b`, 'i');
+  const s = sents.find(x => re.test(x));
+  return s ? s.replace(/\s*\/\s*/g, ' ') : '';
+}
+var autoWordsBusy = false;
+// it: the passage to pull words from; quiet: no toasts (used right after the daily passage arrives)
+async function autoWords(it, n = 10, quiet = false){
+  if (autoWordsBusy) return 0;
+  const pid = it.id, btn = $('wAutoBtn'), sents = parseText(it.text).map(x => x.chunks.join(' '));
+  const say = m => { if (!quiet) toast(m); };
+  autoWordsBusy = true; btn.disabled = true; btn.textContent = '단어 고르는 중…';
+  try {
+    const cands = wordCandidates(it).slice(0, 60);
+    if (!cands.length) { say('새로 뽑을 단어가 없어요.'); return 0; }
+    const freqs = await Promise.all(cands.map(wordFreq));
+    let ranked;
+    if (freqs.some(f => f !== null)) {
+      // rarer first, but skip junk (f < 0.2) and everyday words (f > 60 per million)
+      ranked = cands.map((w, i) => ({w, f: freqs[i]})).filter(x => x.f !== null && x.f >= 0.2 && x.f <= 60)
+        .sort((a, b) => a.f - b.f).map(x => x.w);
+    } else ranked = [...cands].sort((a, b) => b.length - a.length);   // offline-ish fallback
+    const pick = ranked.slice(0, n);
+    if (!pick.length) { say('새로 뽑을 단어가 없어요.'); return 0; }
+    btn.textContent = '뜻과 예문 찾는 중…';
+    const rows = [];
+    for (let i = 0; i < pick.length; i += 3) {   // three words at a time so the free APIs don't throttle us
+      rows.push(...await Promise.all(pick.slice(i, i + 3).map(async w => {
+        const [note, {example, exampleKo}] = await Promise.all([translateKo(w), exampleFor(w)]);
+        return {id: uid(), word: w, note: note || '', context: contextFor(w, sents), example, exampleKo, passageId: pid, added: Date.now(), auto: true};
+      })));
+    }
+    const have = new Set(lib.words.filter(w => w.passageId === pid).map(w => w.word.toLowerCase()));
+    const fresh = rows.filter(r => !have.has(r.word));
+    lib.words.unshift(...fresh);
+    saveLib(); renderLibrary();
+    if (tab === 'words') renderWords();
+    say(fresh.length ? `단어 ${fresh.length}개를 단어장에 정리했어요. 단어 퀴즈로 복습해 보세요.` : '새로 뽑을 단어가 없어요.');
+    return fresh.length;
+  } finally {
+    autoWordsBusy = false; btn.disabled = false; btn.textContent = '✨ 단어 10개 자동 정리';
+  }
+}
+$('wAutoBtn').addEventListener('click', () => autoWords(curItem(), 10));
+
+// ================= daily news passage =================
+// Wikipedia's featured feed (CORS-enabled, no key): "In the news" stories plus a little context
+// from each linked article; falls back to today's featured article when there is little news.
+const DAILY_KEY = 'lp-daily', DAILY_AUTO_KEY = 'lp-daily-auto', DAILY_KEEP_DAYS = 7;
+const localYmd = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+function htmlText(h){ return new DOMParser().parseFromString(String(h || ''), 'text/html').body.textContent || ''; }
+function cleanForListening(t){
+  return t.replace(/\s*\([^()]*\)/g, '').replace(/\s*\[[^\]]*\]/g, '')   // parentheticals, footnotes
+    .replace(/\//g, ' or ').replace(/[ \s]+/g, ' ').replace(/\s+([,.;:!?])/g, '$1').trim();
+}
+function firstSentences(t, n){
+  return cleanForListening(t).split(/(?<=[.?!])\s+(?=[A-Z0-9"“])/).slice(0, n).join(' ');
+}
+const endDot = t => /[.?!]["”']?$/.test(t) ? t : t + '.';
+function composeDaily(feed){
+  const paras = [], seen = new Set();
+  (feed.news || []).slice(0, 3).forEach(n => {
+    const head = cleanForListening(htmlText(n.story));
+    if (!head) return;
+    const link = (n.links || []).find(l => l.extract && !seen.has(l.title));
+    if (link) seen.add(link.title);
+    paras.push(endDot(head) + (link ? ' ' + firstSentences(link.extract, 2) : ''));
+  });
+  if (paras.length < 2 && feed.tfa && feed.tfa.extract) paras.push(firstSentences(feed.tfa.extract, 4));
+  if (paras.length < 2) {
+    const mr = ((feed.mostread || {}).articles || []).find(a => a.extract && !seen.has(a.title));
+    if (mr) paras.push(firstSentences(mr.extract, 3));
+  }
+  return paras.filter(Boolean).join('\n\n');
+}
+async function fetchDailyItem(ymd){
+  const [y, m, d] = ymd.split('-');
+  const feed = await fetchJSON(`https://api.wikimedia.org/feed/v1/wikipedia/en/featured/${y}/${m}/${d}`, 10000);
+  const text = composeDaily(feed || {});
+  if (!text || !parseText(text).length) throw new Error('empty feed');
+  const it = newItem(`오늘의 뉴스 · ${+m}월 ${+d}일`, text);
+  it.id = 'daily-' + ymd; it.daily = ymd;
+  // paragraph-level translation for the 해석 toggle; sentences get translated on hover
+  const ko = await Promise.all(text.split('\n\n').map(p => translateKo(p)));
+  it.trans = ko.every(Boolean) ? ko.join('\n\n') : '';
+  return it;
+}
+function pruneDaily(){
+  // untouched daily passages older than a week go away (with their auto-picked words) so the library doesn't fill up
+  const cutoff = Date.now() - DAILY_KEEP_DAYS * 864e5;
+  const touched = x => x.studied || x.listens || (x.bookmarks || []).length || Object.keys(x.dict || {}).length
+    || Object.keys(x.speak || {}).length || lib.words.some(w => w.passageId === x.id && !w.auto);
+  const gone = new Set(lib.items.filter(x => x.daily && x.id !== lib.currentId && x.created < cutoff && !touched(x)).map(x => x.id));
+  if (!gone.size) return;
+  lib.items = lib.items.filter(x => !gone.has(x.id));
+  lib.words = lib.words.filter(w => !(w.auto && gone.has(w.passageId)));
+}
+var dailyBusy = false;
+async function getDaily(open){
+  const ymd = localYmd(), id = 'daily-' + ymd;
+  if (lib.items.some(x => x.id === id)) { if (open) { openPassage(id); toggleLib(false); } return true; }
+  if (dailyBusy) return false;
+  dailyBusy = true; $('dailyBtn').disabled = true;
+  if (open) $('libNote').textContent = '오늘의 뉴스를 가져오는 중이에요…';
+  try {
+    const it = await fetchDailyItem(ymd);
+    if (!lib.items.some(x => x.id === id)) { lib.items.push(it); pruneDaily(); }
+    try { localStorage.setItem(DAILY_KEY, ymd); } catch(e){}
+    saveLib();
+    if (open) { openPassage(id); toggleLib(false); window.scrollTo({top: 0}); }
+    else { renderLibrary(); toast('📰 오늘의 뉴스 지문이 보관함에 추가됐어요'); }
+    autoWords(it, 10, true);   // vocabulary for the new passage, in the background
+    return true;
+  } catch(e){
+    if (open) $('libNote').textContent = '오늘의 뉴스를 가져오지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요.';
+    return false;
+  } finally {
+    dailyBusy = false; $('dailyBtn').disabled = false;
+  }
+}
+$('dailyBtn').addEventListener('click', () => getDaily(true));
+try { $('dailyAuto').checked = localStorage.getItem(DAILY_AUTO_KEY) !== '0'; } catch(e){}
+$('dailyAuto').addEventListener('change', () => { try { localStorage.setItem(DAILY_AUTO_KEY, $('dailyAuto').checked ? '1' : '0'); } catch(e){} });
+function autoDaily(){
+  let last = null; try { last = localStorage.getItem(DAILY_KEY); } catch(e){}
+  if (!$('dailyAuto').checked || last === localYmd() || navigator.onLine === false) return;
+  getDaily(false);
+}
+
+lib = loadLib();
+if (!Array.isArray(lib.words)) lib.words = [];
+try { const r = +localStorage.getItem('lp-rate'); if (r >= 0.6 && r <= 1.3) { rateEl.value = r; rateEl.dispatchEvent(new Event('input')); } } catch(e){}
+rateEl.addEventListener('change', () => { try { localStorage.setItem('lp-rate', rateEl.value); } catch(e){} });
+openPassage(lib.currentId);
+autoDaily();
+
+// ================= study streak =================
+const STREAK_KEY = 'lp-streak';
+function todayStr(){ return new Date().toISOString().slice(0, 10); }
+function loadStreak(){ try { const s = localStorage.getItem(STREAK_KEY); return s ? JSON.parse(s) : {days:[]}; } catch(e){ return {days:[]}; } }
+function saveStreak(st){ try { localStorage.setItem(STREAK_KEY, JSON.stringify(st)); } catch(e){} }
+function markStudyDay(){
+  const st = loadStreak(), today = todayStr();
+  if (!st.days.includes(today)) { st.days.push(today); st.days.sort(); saveStreak(st); }
+  renderStreak(st);
+}
+function calcStreak(days){
+  if (!days.length) return 0;
+  const today = todayStr(); let count = 0;
+  const d = new Date(); d.setHours(12,0,0,0);
+  for (let i = 0; i < 365; i++) {
+    const ds = d.toISOString().slice(0, 10);
+    if (days.includes(ds)) count++;
+    else if (i > 0) break; // allow today not yet studied; check yesterday next
+    d.setDate(d.getDate() - 1);
+  }
+  return count;
+}
+function renderStreak(st){
+  if (!st) st = loadStreak();
+  const streak = calcStreak(st.days);
+  const el = $('streak');
+  if (!streak && !st.days.length) { el.hidden = true; return; }
+  el.hidden = false;
+  $('streakNum').textContent = streak;
+  const cal = $('streakCal'); cal.innerHTML = '';
+  const today = todayStr();
+  const d = new Date(); d.setHours(12,0,0,0); d.setDate(d.getDate() - 13);
+  for (let i = 0; i < 14; i++) {
+    const ds = d.toISOString().slice(0, 10);
+    const dot = document.createElement('span');
+    dot.className = 'streak-day' + (st.days.includes(ds) ? ' active' : '') + (ds === today ? ' today' : '');
+    dot.title = ds;
+    cal.appendChild(dot);
+    d.setDate(d.getDate() + 1);
+  }
+}
+renderStreak();
+// Hook into study actions to mark day
+const origSaveLib = saveLib;
+saveLib = function(){
+  if (lib && lib.items) { const it = curItem(); if (it && it.studied) markStudyDay(); }
+  return origSaveLib();
+};
+
+// ================= word quiz =================
+var wqActive = false, wqList = [], wqIdx = 0, wqCorrect = 0, wqTotal = 0, wqMode = 'listen';
+function wqShuffle(arr){ for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
+function wqStart(){
+  const pool = lib.words.filter(w => wScope === 'all' || w.passageId === lib.currentId);
+  if (pool.length < 2) { toast('퀴즈를 시작하려면 단어가 2개 이상 필요해요.'); return; }
+  wqActive = true; $('wQuizStart').setAttribute('aria-pressed', 'true');
+  wqList = wqShuffle([...pool]); wqIdx = 0; wqCorrect = 0; wqTotal = 0;
+  $('wordQuiz').hidden = false;
+  wqShow();
+}
+function wqStop(){
+  wqActive = false; $('wQuizStart').setAttribute('aria-pressed', 'false');
+  $('wordQuiz').hidden = true;
+}
+// the sentence with the word replaced by a blank, or null if the exact word isn't in it
+function blankOut(sent, word){
+  if (!sent || !word) return null;
+  const safe = word.replace(/[^A-Za-z0-9' -]/g, '').trim(); if (!safe) return null;
+  const re = new RegExp(`\\b${safe}\\b`, 'i');
+  return re.test(sent) ? sent.replace(new RegExp(re.source, 'gi'), '_____') : null;
+}
+function wqShow(){
+  if (wqIdx >= wqList.length) { wqIdx = 0; wqShuffle(wqList); }
+  const w = wqList[wqIdx];
+  $('wqFb').textContent = ''; $('wqFb').className = 'wq-feedback';
+  $('wqIn').value = '';
+  const modes = ['listen'];
+  if (w.note) modes.push('meaning');
+  const blank = blankOut(w.example, w.word) ?? blankOut(w.context, w.word);
+  if (blank !== null) modes.push('blank');
+  wqMode = modes[Math.floor(Math.random() * modes.length)];
+  if (wqMode === 'blank') {
+    $('wqHint').textContent = '빈칸에 들어갈 단어를 입력하세요.' + (w.note ? ` (뜻: ${w.note})` : '');
+    $('wqPrompt').textContent = blank;
+  } else if (wqMode === 'listen') {
+    $('wqHint').textContent = '발음을 듣고 철자를 입력하세요.';
+    $('wqPrompt').textContent = '🔊';
+    sayText(w.word);
+  } else {
+    $('wqHint').textContent = '뜻을 보고 영어 단어를 입력하세요.';
+    $('wqPrompt').textContent = w.note || '(뜻이 없어요)';
+  }
+  $('wqProg').textContent = `${wqCorrect}/${wqTotal} 정답`;
+  $('wqIn').focus();
+}
+function wqCheck(){
+  const input = $('wqIn').value.trim().toLowerCase();
+  if (!input) { $('wqIn').focus(); return; }
+  const w = wqList[wqIdx]; wqTotal++;
+  if (input === w.word.toLowerCase()) {
+    wqCorrect++;
+    $('wqFb').textContent = '정답이에요!'; $('wqFb').className = 'wq-feedback correct';
+    sayText(w.word);
+    setTimeout(() => { wqIdx++; wqShow(); }, 1200);
+  } else {
+    $('wqFb').innerHTML = `틀렸어요. 정답은 <strong>${esc(w.word)}</strong>`;
+    $('wqFb').className = 'wq-feedback wrong';
+    sayText(w.word);
+  }
+  $('wqProg').textContent = `${wqCorrect}/${wqTotal} 정답`;
+}
+$('wQuizStart').addEventListener('click', () => { wqActive ? wqStop() : wqStart(); });
+$('wqCheck').addEventListener('click', wqCheck);
+$('wqSkip').addEventListener('click', () => { wqIdx++; wqShow(); });
+$('wqIn').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); wqCheck(); }
+});
+$('wqPrompt').addEventListener('click', () => {
+  if (wqMode === 'listen' && wqList[wqIdx]) sayText(wqList[wqIdx].word);
+});
+
+// ================= word-level highlight (onboundary) =================
+var hlChunkEl = null;
+function clearWordHL(){ if (hlChunkEl) { hlChunkEl.innerHTML = ''; hlChunkEl.textContent = hlChunkEl._origText || ''; hlChunkEl = null; } }
+function setupWordHL(chunkObj){
+  clearWordHL();
+  const el = chunkObj.el; const text = chunkObj.text;
+  // Split into words + separators for span wrapping
+  const parts = text.split(/(\s+)/);
+  if (parts.length <= 1) return; // single word, no need
+  el._origText = text; el.textContent = '';
+  let wIdx = 0;
+  parts.forEach(p => {
+    if (/^\s+$/.test(p)) { el.appendChild(document.createTextNode(p)); return; }
+    const sp = document.createElement('span'); sp.className = 'whl'; sp.textContent = p;
+    sp.dataset.wi = wIdx++;
+    el.appendChild(sp);
+  });
+  hlChunkEl = el;
+}
+// Enhanced speak with boundary events
+const origSpeak = speak;
+function speakWithHL(text, myToken, mul, chunkObj){
+  if (!chunkObj) return origSpeak(text, myToken, mul);
+  return new Promise(res => {
+    if (myToken !== token) return res(false);
+    const u = new SpeechSynthesisUtterance(text);
+    const v = voices.find(x => x.name === voiceEl.value); if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
+    u.rate = Math.max(0.5, +rateEl.value * (mul || 1));
+    // Try word highlighting
+    if (tab === 'listen' && mode === 'chunk') {
+      setupWordHL(chunkObj);
+      u.onboundary = e => {
+        if (e.name !== 'word' || !hlChunkEl) return;
+        const words = hlChunkEl.querySelectorAll('.whl');
+        // Find which word matches the char offset
+        let charCount = 0;
+        words.forEach(w => {
+          const wStart = text.indexOf(w.textContent, charCount > 0 ? charCount - 1 : 0);
+          w.classList.toggle('whl-cur', wStart >= 0 && Math.abs(wStart - e.charIndex) < 3);
+          if (wStart >= 0) charCount = wStart + w.textContent.length;
+        });
+      };
+    }
+    u.onend = () => { clearWordHL(); res(myToken === token); };
+    u.onerror = () => { clearWordHL(); res(false); };
+    synth.speak(u);
+  });
+}
+
+// ================= speed training =================
+var speedTrainOn = false, speedTrainBase = 0;
+$('speedTrain').addEventListener('click', () => {
+  speedTrainOn = !speedTrainOn;
+  $('speedTrain').setAttribute('aria-pressed', speedTrainOn);
+  if (speedTrainOn) {
+    speedTrainBase = +rateEl.value;
+    toast(`속도 훈련 시작! ${speedTrainBase.toFixed(2)}×부터 매 반복마다 0.05씩 올라가요.`);
+  } else {
+    rateEl.value = speedTrainBase || 0.9;
+    rateEl.dispatchEvent(new Event('input'));
+    toast('속도 훈련을 끝냈어요.');
+  }
+});
+
+// ================= sentence bookmarks =================
+function getBookmarks(){
+  const it = curItem(); if (!it) return [];
+  if (!it.bookmarks) it.bookmarks = [];
+  return it.bookmarks;
+}
+function toggleBookmark(si){
+  const it = curItem(); if (!it) return;
+  if (!it.bookmarks) it.bookmarks = [];
+  const idx = it.bookmarks.indexOf(si);
+  if (idx >= 0) it.bookmarks.splice(idx, 1); else it.bookmarks.push(si);
+  saveLib();
+}
+function isBookmarked(si){ return getBookmarks().includes(si); }
+
+// ================= IndexedDB for recordings =================
+var idb = null;
+function openIDB(){
+  return new Promise((res, rej) => {
+    if (idb) return res(idb);
+    if (!window.indexedDB) return rej('no idb');
+    const req = indexedDB.open('lp-recordings', 1);
+    req.onupgradeneeded = e => { e.target.result.createObjectStore('recs'); };
+    req.onsuccess = e => { idb = e.target.result; res(idb); };
+    req.onerror = () => rej('idb error');
+  });
+}
+async function saveRecToIDB(key, blob, mime){
+  try {
+    const db = await openIDB();
+    const tx = db.transaction('recs', 'readwrite');
+    tx.objectStore('recs').put({blob, mime, saved: Date.now()}, key);
+  } catch(e){}
+}
+async function loadRecFromIDB(key){
+  try {
+    const db = await openIDB();
+    return new Promise(res => {
+      const tx = db.transaction('recs', 'readonly');
+      const req = tx.objectStore('recs').get(key);
+      req.onsuccess = () => res(req.result || null);
+      req.onerror = () => res(null);
+    });
+  } catch(e){ return null; }
+}
+async function deleteRecFromIDB(key){
+  try { const db = await openIDB(); db.transaction('recs', 'readwrite').objectStore('recs').delete(key); } catch(e){}
+}
+// Load saved recordings on passage open
+async function loadSavedRecordings(){
+  try {
+    const db = await openIDB();
+    const tx = db.transaction('recs', 'readonly');
+    const store = tx.objectStore('recs');
+    const req = store.openCursor();
+    req.onsuccess = e => {
+      const cursor = e.target.result;
+      if (!cursor) { if (tab === 'speak') spRender(); return; }
+      const key = cursor.key;
+      if (typeof key === 'string' && key.startsWith(lib.currentId + ':')) {
+        if (!recordings.has(key) && cursor.value) {
+          const {blob, mime} = cursor.value;
+          try {
+            const realBlob = new Blob([blob], {type: mime || 'audio/webm'});
+            recordings.set(key, {url: URL.createObjectURL(realBlob), ext: /mp4/.test(mime) ? 'm4a' : /ogg/.test(mime) ? 'ogg' : 'webm'});
+          } catch(e){}
+        }
+      }
+      cursor.continue();
+    };
+  } catch(e){}
+}
+
+// ================= touch swipe navigation =================
+(function(){
+  let sx = 0, sy = 0;
+  const MIN_DIST = 60;
+  document.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive: true});
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) < MIN_DIST || Math.abs(dy) > Math.abs(dx) * 0.7) return;
+    const dir = dx > 0 ? -1 : 1;
+    if (tab === 'listen') go(dir);
+    else if (tab === 'dict') dStep(dir);
+    else if (tab === 'speak') { if (dir > 0 && spIdx < sentences.length - 1) spGo(spIdx + 1); else if (dir < 0 && spIdx > 0) spGo(spIdx - 1); }
+  }, {passive: true});
+})();
+
+window.addEventListener('pagehide', () => { if (synth) synth.cancel(); });
+
+// Init IndexedDB recordings
+loadSavedRecordings();
+</script>
+</body>
+</html>
