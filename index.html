@@ -1795,7 +1795,14 @@ async function getDaily(open){
     try { localStorage.setItem(DAILY_KEY, ymd); } catch(e){}
     saveLib();
     if (open) { openPassage(id); toggleLib(false); window.scrollTo({top: 0}); }
-    else { renderLibrary(); toast('📰 오늘의 뉴스 지문이 보관함에 추가됐어요'); }
+    else {
+      const cur = lib.items.find(x => x.id === lib.currentId);
+      // 어제 자동으로 받은 뉴스를 보고 있었다면 오늘 것으로 바로 넘어가요
+      const swap = cur && cur.daily && cur.daily < ymd && !playing && tab === 'listen';
+      if (swap) { openPassage(id); window.scrollTo({top: 0}); }
+      else renderLibrary();
+      toast(swap ? '📰 오늘의 뉴스로 넘어왔어요' : '📰 오늘의 뉴스 지문이 보관함에 추가됐어요');
+    }
     autoWords(it, 10, true);   // vocabulary for the new passage, in the background
     return true;
   } catch(e){
