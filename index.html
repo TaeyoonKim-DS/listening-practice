@@ -1784,26 +1784,40 @@ function firstSentences(t, n){
   return cleanForListening(t).split(/(?<=[.?!])\s+(?=[A-Z0-9"“])/).slice(0, n).join(' ');
 }
 const endDot = t => /[.?!]["”']?$/.test(t) ? t : t + '.';
-function composeDaily(feed){
-  const paras = [], seen = new Set();
-  (feed.news || []).slice(0, 3).forEach(n => {
+// 'In the news' stories stay up for days, so stories already used in earlier daily passages (prev) are skipped
+// and the parts of the feed that change every day (featured article, most read, on this day) fill the rest.
+function composeDaily(feed, prev = ''){
+  const paras = [], seen = new Set(), WANT = 3;
+  const fresh = t => t && !prev.includes(t.slice(0, 80));
+  for (const n of feed.news || []) {
+    if (paras.length >= 2) break;
     const head = cleanForListening(htmlText(n.story));
-    if (!head) return;
+    if (!fresh(head)) continue;
     const link = (n.links || []).find(l => l.extract && !seen.has(l.title));
     if (link) seen.add(link.title);
     paras.push(endDot(head) + (link ? ' ' + firstSentences(link.extract, 2) : ''));
-  });
-  if (paras.length < 2 && feed.tfa && feed.tfa.extract) paras.push(firstSentences(feed.tfa.extract, 4));
-  if (paras.length < 2) {
-    const mr = ((feed.mostread || {}).articles || []).find(a => a.extract && !seen.has(a.title));
-    if (mr) paras.push(firstSentences(mr.extract, 3));
+  }
+  const tfa = feed.tfa && feed.tfa.extract && firstSentences(feed.tfa.extract, 4);
+  if (fresh(tfa)) { paras.push(tfa); seen.add(feed.tfa.title); }
+  for (const a of (feed.mostread || {}).articles || []) {
+    if (paras.length >= WANT) break;
+    if (!a.extract || seen.has(a.title)) continue;
+    const t = firstSentences(a.extract, 3);
+    if (fresh(t)) { paras.push(t); seen.add(a.title); }
+  }
+  for (const e of feed.onthisday || []) {
+    if (paras.length >= WANT) break;
+    const t = e.text && cleanForListening(e.text);
+    if (!fresh(t)) continue;
+    paras.push(`On this day in ${e.year}: ${endDot(t)}`);
   }
   return paras.filter(Boolean).join('\n\n');
 }
+const prevDailyText = ymd => lib.items.filter(x => x.daily && x.daily !== ymd).map(x => x.text).join('\n');
 async function fetchDailyItem(ymd){
   const [y, m, d] = ymd.split('-');
   const feed = await fetchJSON(`https://api.wikimedia.org/feed/v1/wikipedia/en/featured/${y}/${m}/${d}`, 10000);
-  const text = composeDaily(feed || {});
+  const text = composeDaily(feed || {}, prevDailyText(ymd));
   if (!text || !parseText(text).length) throw new Error('empty feed');
   const it = newItem(`오늘의 뉴스 · ${+m}월 ${+d}일`, text);
   it.id = 'daily-' + ymd; it.daily = ymd;
