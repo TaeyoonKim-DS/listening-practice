@@ -287,7 +287,7 @@ body:not(.mode-listen) .listen-only{display:none !important}
     <h2>지문 보관함</h2>
     <div class="lib-actions">
       <button class="btn primary" id="newBtn">새 지문 추가</button>
-      <button class="btn" id="dailyBtn" title="위키백과 'In the news'와 오늘의 글로 영어 지문을 만들어요">📰 오늘의 뉴스</button>
+      <button class="btn" id="dailyBtn" title="위키백과 뉴스나 오늘의 글에서 한 가지 주제를 골라 3문단 이야기 지문을 만들어요">📰 오늘의 뉴스</button>
       <button class="btn" id="exportBtn">파일로 내보내기</button>
       <button class="btn" id="importBtn">파일에서 불러오기</button>
       <input type="file" id="importIn" accept=".json,application/json" hidden>
@@ -489,7 +489,7 @@ body:not(.mode-listen) .listen-only{display:none !important}
     <p>🔒 지문, 학습 기록, 녹음, 단어장은 이 브라우저에만 저장되고 따로 서버로 보내지 않아요. 브라우저 데이터를 지우면 함께 사라지니 보관함에서 파일로 내보내 두세요.</p>
     <p>🎙️ 말하기 채점은 브라우저 내장 음성 인식을 써요. 브라우저에 따라 음성이 제조사(Google, Apple, Microsoft 등) 서버를 거쳐 처리될 수 있어요.</p>
     <p>🌐 문장 해석과 단어 뜻은 해당 문장이나 단어를 외부 무료 서비스(Google 번역, MyMemory, Wiktionary 등)에 보내 가져와요. 오늘의 뉴스 자동 받기가 켜져 있으면 매일 처음 열 때 위키백과에서 지문을 받아 오면서 이 서비스들에 자동으로 접속해요(보관함에서 끌 수 있어요). 글꼴은 Google Fonts에서 불러와요.</p>
-    <p>💻 권장 브라우저: Chrome · Edge · Safari 최신 버전 · 버전 2026.10.15-5</p>
+    <p>💻 권장 브라우저: Chrome · Edge · Safari 최신 버전 · 버전 2026.10.15-6</p>
   </footer>
 </div>
 
@@ -1802,14 +1802,19 @@ function loadSeen(){
   return log.filter(e => e && typeof e.d === 'string' && e.d >= cutoff);
 }
 function saveSeen(log){ try { localStorage.setItem(SEEN_KEY, JSON.stringify(log)); } catch(e){} }
-function composeDaily(feed, log = []){
-  const paras = [], titles = [], WANT = 3;
+function seenChecker(log){
   const seenT = new Set(log.flatMap(e => e.t || []));
   const used = log.flatMap(e => e.s || []).map(s => new Set(s.split(' '))).filter(w => w.size >= 3);
   const repeats = s => {
     const w = keyWords(s); if (w.size < 3) return false;
     return used.some(u => { let n = 0; w.forEach(x => { if (u.has(x)) n++; }); return n / (w.size + u.size - n) >= 0.4; });
   };
+  return {seenT, used, repeats};
+}
+// fallback when no single topic yields a full story: up to three short paragraphs from different parts of the feed
+function composeDaily(feed, log = []){
+  const paras = [], titles = [], WANT = 3;
+  const {seenT, used, repeats} = seenChecker(log);
   // check: every article the item links to; record: the article the paragraph is about
   const add = (lead, rest, check, main) => {
     if (!lead || check.some(t => seenT.has(t)) || repeats(lead)) return false;
@@ -1843,11 +1848,67 @@ function composeDaily(feed, log = []){
   }
   return {text: paras.filter(Boolean).join('\n\n'), titles};
 }
+// ---- single-topic story: pick one fresh topic and tell it in 3 paragraphs from its full Wikipedia article
+// (headline + what it is → background → details), so the passage reads as one story instead of three snippets.
+const STORY_SKIP = /^(See also|References|Notes|External links|Further reading|Bibliography|Sources|Citations|Gallery|Footnotes|Works cited|Filmography|Discography|Selected works|Publications|Awards and nominations|Awards|Accolades|Track listing|Personnel|Charts|Certifications|Release history)$/i;
+const ABBR_END = /\b(?:No|Nos|Mr|Mrs|Ms|Dr|St|Jr|Sr|vs|Inc|Ltd|Co|Corp|Gen|Lt|Col|Capt|Sgt|Rev|Prof|Mt|Ft|[A-Z])\.$/;
+const ABBR_IN = /\b(?:No|Nos|Mr|Mrs|Ms|Dr|St|Jr|Sr|vs|Inc|Ltd|Co|Corp|Gen|Lt|Col|Capt|Sgt|Rev|Prof|Mt|Ft|[A-Z])\.\s/;
+const jaccard = (a, b) => { let n = 0; a.forEach(x => { if (b.has(x)) n++; }); return n / ((a.size + b.size - n) || 1); };
+async function fetchArticleText(title){
+  const d = await fetchJSON(`https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&origin=*&prop=extracts&explaintext=1&redirects=1&titles=${encodeURIComponent(title)}`, 10000);
+  return (((d && d.query && d.query.pages) || [])[0] || {}).extract || '';
+}
+function storySentences(extract){
+  const out = []; let skip2 = false, skip = false;
+  for (let line of extract.split('\n')) {
+    line = line.trim();
+    const h = line.match(/^(=+)\s*(.*?)\s*=+$/);
+    if (h) { const s = STORY_SKIP.test(h[2]); if (h[1].length === 2) skip2 = skip = s; else skip = skip2 || s; continue; }
+    if (skip || line.length < 60 || !/[.?!]["”']?$/.test(line)) continue;   // prose paragraphs only
+    const parts = [];
+    splitSents(cleanForListening(line)).forEach(s => {
+      if (parts.length && ABBR_END.test(parts[parts.length - 1])) parts[parts.length - 1] += ' ' + s; else parts.push(s);
+    });
+    // the passage parser would cut "No. 1" / "U.S. Army" apart again, so sentences with such abbreviations are left out
+    out.push(...parts.filter(s => s.length >= 25 && s.length <= 260 && !/[=|{}<>]/.test(s) && !ABBR_IN.test(s)));
+  }
+  return out;
+}
+async function composeStory(feed, log){
+  const {seenT, repeats} = seenChecker(log);
+  const cands = [];
+  for (const n of feed.news || []) {
+    const links = (n.links || []).map(l => l.title).filter(Boolean);
+    if (links.length) cands.push({lead: endDot(cleanForListening(htmlText(n.story))), check: links, options: links.slice(0, 2)});
+  }
+  if (feed.tfa && feed.tfa.title) cands.push({check: [feed.tfa.title], options: [feed.tfa.title]});
+  for (const a of ((feed.mostread || {}).articles || []).slice(0, 8))
+    if (a.title && !/^(Lists?_of|Deaths_in|\d{4}_in_)/.test(a.title)) cands.push({check: [a.title], options: [a.title]});
+  for (const e of (feed.onthisday || []).slice(0, 6)) {
+    const pages = (e.pages || []).map(p => p.title).filter(t => t && !/^\d+$/.test(t));   // skip year articles
+    if (e.text && pages.length) cands.push({lead: `On this day in ${e.year}: ${endDot(cleanForListening(e.text))}`, check: pages, options: [pages[0]]});
+  }
+  let fetches = 0;
+  for (const c of cands) {
+    if (c.check.some(t => seenT.has(t)) || (c.lead && repeats(c.lead))) continue;
+    for (const title of c.options) {
+      if (fetches++ >= 6) return null;
+      let text = ''; try { text = await fetchArticleText(title); } catch(e){ continue; }
+      const leadW = c.lead ? keyWords(c.lead) : null;
+      const ss = storySentences(text).filter(s => !repeats(s) && !(leadW && jaccard(keyWords(s), leadW) >= 0.5)).slice(0, 12);
+      if (ss.length < (c.lead ? 7 : 8)) continue;
+      const n1 = c.lead ? 2 : 3, p1 = (c.lead ? [c.lead] : []).concat(ss.slice(0, n1)), rest = ss.slice(n1);
+      return {text: [p1, rest.slice(0, 3), rest.slice(3, 6)].map(p => p.join(' ')).join('\n\n'), titles: [title]};
+    }
+  }
+  return null;
+}
 async function fetchDailyItem(ymd){
   const [y, m, d] = ymd.split('-');
   const feed = await fetchJSON(`https://api.wikimedia.org/feed/v1/wikipedia/en/featured/${y}/${m}/${d}`, 10000);
   const log = loadSeen();
-  const {text, titles} = composeDaily(feed || {}, log);
+  let story = null; try { story = await composeStory(feed || {}, log); } catch(e){}
+  const {text, titles} = story || composeDaily(feed || {}, log);
   if (!text || !parseText(text).length) throw new Error('empty feed');
   const it = newItem(`오늘의 뉴스 · ${+m}월 ${+d}일`, text);
   it.id = 'daily-' + ymd; it.daily = ymd;
