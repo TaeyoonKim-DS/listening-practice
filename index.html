@@ -489,7 +489,7 @@ body:not(.mode-listen) .listen-only{display:none !important}
     <p>🔒 지문, 학습 기록, 녹음, 단어장은 이 브라우저에만 저장되고 따로 서버로 보내지 않아요. 브라우저 데이터를 지우면 함께 사라지니 보관함에서 파일로 내보내 두세요.</p>
     <p>🎙️ 말하기 채점은 브라우저 내장 음성 인식을 써요. 브라우저에 따라 음성이 제조사(Google, Apple, Microsoft 등) 서버를 거쳐 처리될 수 있어요.</p>
     <p>🌐 문장 해석과 단어 뜻은 해당 문장이나 단어를 외부 무료 서비스(Google 번역, MyMemory, Wiktionary 등)에 보내 가져와요. 오늘의 뉴스 자동 받기가 켜져 있으면 매일 처음 열 때 위키백과에서 지문을 받아 오면서 이 서비스들에 자동으로 접속해요(보관함에서 끌 수 있어요). 글꼴은 Google Fonts에서 불러와요.</p>
-    <p>💻 권장 브라우저: Chrome · Edge · Safari 최신 버전 · 버전 2026.10.15-3</p>
+    <p>💻 권장 브라우저: Chrome · Edge · Safari 최신 버전 · 버전 2026.10.15-4</p>
   </footer>
 </div>
 
@@ -1784,58 +1784,76 @@ function firstSentences(t, n){
   return cleanForListening(t).split(/(?<=[.?!])\s+(?=[A-Z0-9"“])/).slice(0, n).join(' ');
 }
 const endDot = t => /[.?!]["”']?$/.test(t) ? t : t + '.';
-// 'In the news' stories stay up for days (often reworded slightly), so any sentence that mostly repeats one
-// from earlier daily passages (prev) is dropped, and the parts of the feed that change every day
-// (featured article, most read, on this day) fill the rest.
+// A daily passage must not repeat anything used in the last 30 days. What was used is kept in its own log
+// (the library can't be the source: passages get deleted by the user and pruned after a week):
+// the Wikipedia article titles each paragraph came from, plus the keywords of every sentence.
+// 'In the news' stories stay up for days and get reworded, so a story is skipped when it links to an article
+// already used, or when its lead sentence largely repeats an earlier one.
+const SEEN_KEY = 'lp-daily-seen', SEEN_DAYS = 30;
 const splitSents = t => t.split(/\n+|(?<=[.?!]["”']?)\s+(?=["“]?[A-Z0-9])/).map(s => s.trim()).filter(Boolean);
 const keyWords = s => new Set((s.toLowerCase().match(/[a-z0-9]+/g) || []).filter(w => w.length > 3));
-function composeDaily(feed, prev = ''){
-  const paras = [], seen = new Set(), WANT = 3;
-  const used = splitSents(prev).map(keyWords).filter(w => w.size >= 3);
+const sentKeys = t => splitSents(t).map(s => [...keyWords(s)].join(' ')).filter(Boolean);
+function loadSeen(){
+  let log = null; try { log = JSON.parse(localStorage.getItem(SEEN_KEY) || 'null'); } catch(e){}
+  // first run: start from the daily passages already in the library (today's included)
+  if (!Array.isArray(log)) log = lib.items.filter(x => x.daily).map(x => ({d: x.daily, t: [], s: sentKeys(x.text)}));
+  const cutoff = localYmd(new Date(Date.now() - SEEN_DAYS * 864e5));
+  return log.filter(e => e && typeof e.d === 'string' && e.d >= cutoff);
+}
+function saveSeen(log){ try { localStorage.setItem(SEEN_KEY, JSON.stringify(log)); } catch(e){} }
+function composeDaily(feed, log = []){
+  const paras = [], titles = [], WANT = 3;
+  const seenT = new Set(log.flatMap(e => e.t || []));
+  const used = log.flatMap(e => e.s || []).map(s => new Set(s.split(' '))).filter(w => w.size >= 3);
   const repeats = s => {
     const w = keyWords(s); if (w.size < 3) return false;
-    return used.some(u => { let n = 0; w.forEach(x => { if (u.has(x)) n++; }); return n / (w.size + u.size - n) >= 0.5; });
+    return used.some(u => { let n = 0; w.forEach(x => { if (u.has(x)) n++; }); return n / (w.size + u.size - n) >= 0.4; });
   };
-  // keep only new sentences; a paragraph whose lead sentence was already used is skipped entirely
-  const add = (lead, rest = '') => {
-    if (!lead || repeats(lead)) return false;
-    const sents = [lead, ...splitSents(rest).filter(s => !repeats(s))];
+  // check: every article the item links to; record: the article the paragraph is about
+  const add = (lead, rest, check, main) => {
+    if (!lead || check.some(t => seenT.has(t)) || repeats(lead)) return false;
+    const sents = [lead, ...splitSents(rest || '').filter(s => !repeats(s))];
     paras.push(sents.join(' '));
     sents.forEach(s => used.push(keyWords(s)));
+    if (main) { seenT.add(main); titles.push(main); }
     return true;
   };
   for (const n of feed.news || []) {
     if (paras.length >= 2) break;
-    const link = (n.links || []).find(l => l.extract && !seen.has(l.title));
-    if (add(endDot(cleanForListening(htmlText(n.story))), link ? firstSentences(link.extract, 2) : '') && link) seen.add(link.title);
+    const links = (n.links || []).filter(l => l.title), link = links.find(l => l.extract);
+    add(endDot(cleanForListening(htmlText(n.story))), link ? firstSentences(link.extract, 2) : '', links.map(l => l.title), link && link.title);
   }
-  if (feed.tfa && feed.tfa.extract) {
-    const [lead, ...rest] = splitSents(firstSentences(feed.tfa.extract, 4));
-    if (add(lead, rest.join(' '))) seen.add(feed.tfa.title);
-  }
+  const article = a => {
+    if (!a || !a.extract || !a.title) return;
+    const [lead, ...rest] = splitSents(firstSentences(a.extract, a === feed.tfa ? 4 : 3));
+    add(lead, rest.join(' '), [a.title], a.title);
+  };
+  article(feed.tfa);
   for (const a of (feed.mostread || {}).articles || []) {
     if (paras.length >= WANT) break;
-    if (!a.extract || seen.has(a.title)) continue;
-    const [lead, ...rest] = splitSents(firstSentences(a.extract, 3));
-    if (add(lead, rest.join(' '))) seen.add(a.title);
+    if (/^(Lists?_of|Deaths_in|\d{4}_in_)/.test(a.title || '')) continue;   // list pages don't make a passage
+    article(a);
   }
   for (const e of feed.onthisday || []) {
     if (paras.length >= WANT) break;
-    if (e.text) add(`On this day in ${e.year}: ${endDot(cleanForListening(e.text))}`);
+    if (!e.text) continue;
+    const pages = (e.pages || []).map(p => p.title).filter(t => t && !/^\d+$/.test(t));   // skip year articles
+    add(`On this day in ${e.year}: ${endDot(cleanForListening(e.text))}`, '', pages, pages[0]);
   }
-  return paras.filter(Boolean).join('\n\n');
+  return {text: paras.filter(Boolean).join('\n\n'), titles};
 }
-const prevDailyText = ymd => lib.items.filter(x => x.daily && x.daily !== ymd).map(x => x.text).join('\n');
 async function fetchDailyItem(ymd){
   const [y, m, d] = ymd.split('-');
   const feed = await fetchJSON(`https://api.wikimedia.org/feed/v1/wikipedia/en/featured/${y}/${m}/${d}`, 10000);
-  const text = composeDaily(feed || {}, prevDailyText(ymd));
+  const log = loadSeen();
+  const {text, titles} = composeDaily(feed || {}, log);
   if (!text || !parseText(text).length) throw new Error('empty feed');
   const it = newItem(`오늘의 뉴스 · ${+m}월 ${+d}일`, text);
   it.id = 'daily-' + ymd; it.daily = ymd;
   // paragraph-level translation for the 해석 toggle; sentences get translated on hover
   const ko = await Promise.all(text.split('\n\n').map(p => translateKo(p)));
   it.trans = ko.every(Boolean) ? ko.join('\n\n') : '';
+  log.push({d: ymd, t: titles, s: sentKeys(text)}); saveSeen(log);   // kept even if the passage is deleted later
   return it;
 }
 function pruneDaily(){
@@ -1892,6 +1910,8 @@ if (!Array.isArray(lib.words)) lib.words = [];
 try { const r = +localStorage.getItem('lp-rate'); if (r >= 0.6 && r <= 1.3) { rateEl.value = r; rateEl.dispatchEvent(new Event('input')); } } catch(e){}
 rateEl.addEventListener('change', () => { try { localStorage.setItem('lp-rate', rateEl.value); } catch(e){} });
 openPassage(lib.currentId);
+// seed the 30-day log right away, before the user can delete any existing daily passage
+try { if (localStorage.getItem(SEEN_KEY) === null) saveSeen(loadSeen()); } catch(e){}
 autoDaily();
 
 // ================= study streak =================
