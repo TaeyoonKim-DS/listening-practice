@@ -3,7 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>듣기 연습: 일본 금리와 주택대출</title>
+<title>영어 듣기 연습</title>
+<meta name="description" content="끊어 읽기로 듣고, 받아쓰고, 따라 말하는 무료 영어 듣기 연습 앱. 설치·가입 없이 브라우저에서 바로 쓰고, 기록은 내 브라우저에만 저장돼요.">
+<link rel="canonical" href="https://taeyoonkim-ds.github.io/listening-practice/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="영어 듣기 연습">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="영어 듣기 연습: 끊어 듣고, 받아쓰고, 따라 말하기">
+<meta property="og:description" content="원하는 영어 지문을 넣고 끊어 읽기 단위로 듣기·받아쓰기·말하기를 연습하세요. 설치·가입 없이 브라우저에서 바로 써요.">
+<meta property="og:url" content="https://taeyoonkim-ds.github.io/listening-practice/">
+<meta property="og:image" content="https://taeyoonkim-ds.github.io/listening-practice/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="영어 듣기 연습 앱: 끊어 읽기 표시가 된 영어 지문과 듣기·받아쓰기·말하기 탭">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="영어 듣기 연습: 끊어 듣고, 받아쓰고, 따라 말하기">
+<meta name="twitter:description" content="원하는 영어 지문을 넣고 끊어 읽기 단위로 듣기·받아쓰기·말하기를 연습하세요. 설치·가입 없이 브라우저에서 바로 써요.">
+<meta name="twitter:image" content="https://taeyoonkim-ds.github.io/listening-practice/og-image.png">
+<meta name="twitter:image:alt" content="영어 듣기 연습 앱: 끊어 읽기 표시가 된 영어 지문과 듣기·받아쓰기·말하기 탭">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -69,6 +86,8 @@ select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(-
 button:focus-visible,select:focus-visible,input:focus-visible,.chunk:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .pos{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums;font-size:14px}
 .tips{color:var(--muted);font-size:13.5px;margin-top:18px}
+.notice{color:var(--muted);font-size:12.5px;line-height:1.65;margin-top:28px;padding-top:14px;border-top:1px solid var(--line)}
+.notice p{margin:0 0 4px}
 .tips kbd{font-family:inherit;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--paper);color:var(--ink)}
 .warn{display:none;background:var(--hl);color:var(--hl-ink);border-radius:10px;padding:10px 14px;margin-bottom:16px}
 .head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
@@ -239,7 +258,7 @@ body:not(.mode-listen) .listen-only{display:none !important}
 <body>
 <div class="wrap">
   <div class="head">
-    <h1 id="title">일본 장기금리 30년 만의 최고치</h1>
+    <h1 id="title">계획에 없던 바닷가 아침</h1>
     <div class="head-btns">
       <button class="btn" id="libBtn" aria-expanded="false" aria-controls="lib">보관함</button>
       <button class="btn" id="editBtn">이 지문 편집</button>
@@ -465,6 +484,13 @@ body:not(.mode-listen) .listen-only{display:none !important}
     본문 단어 드래그(휴대폰: 길게 누르기)로 단어장에 추가 · ★ 북마크 · 숫자는 영어 단어도 OK (forty = 40).
     추천: 가리기 듣기 → 받아쓰기 → 말하기 섀도잉 → 단어 퀴즈 → 해석 확인. 녹음은 새로고침 후에도 남아요.
   </p>
+
+  <footer class="notice">
+    <p>🔒 지문, 학습 기록, 녹음, 단어장은 이 브라우저에만 저장되고 따로 서버로 보내지 않아요. 브라우저 데이터를 지우면 함께 사라지니 보관함에서 파일로 내보내 두세요.</p>
+    <p>🎙️ 말하기 채점은 브라우저 내장 음성 인식을 써요. 브라우저에 따라 음성이 제조사(Google, Apple, Microsoft 등) 서버를 거쳐 처리될 수 있어요.</p>
+    <p>🌐 문장 해석과 단어 뜻은 해당 문장이나 단어를 외부 무료 서비스(Google 번역, MyMemory, Wiktionary 등)에 보내 가져와요. 오늘의 뉴스 자동 받기가 켜져 있으면 매일 처음 열 때 위키백과에서 지문을 받아 오면서 이 서비스들에 자동으로 접속해요(보관함에서 끌 수 있어요). 글꼴은 Google Fonts에서 불러와요.</p>
+    <p>💻 권장 브라우저: Chrome · Edge · Safari 최신 버전</p>
+  </footer>
 </div>
 
 <div class="bar listen-only">
@@ -502,15 +528,28 @@ body:not(.mode-listen) .listen-only{display:none !important}
   matchMedia('(prefers-color-scheme:dark)').addEventListener('change', update);
 })();
 
-const RAW = `Long-term interest rates in Japan/ are at their highest level in about 30 years,/ and concern about rising mortgage rates is spreading./ At one homebuilder in Miyazaki City,/ many customers still choose the cheaper variable rate./ Even so,/ the company says questions about rising monthly repayments have continued/ since the current fiscal year began./
+const RAW = `Last spring,/ I took a short trip to a small coastal town/ that I had only seen in photos./ I planned every detail in advance,/ from the train times to the restaurants I wanted to try./ But on the very first morning,/ I fell asleep on the train/ and woke up three stops past my station./
 
-Rates on display at banks remain/ in the 2 to 3 percent range for loans with a fixed rate./ For variable loans,/ whose rate can change,/ the range is 0.9 to 1 percent./ The company estimates that on a 40,000,000 yen loan repaid/ over 40 years,/ an increase of 0.25 percent adds about 5,000 yen monthly./
+At first,/ I felt nervous and a little silly./ The station was tiny,/ and the only person around was an old man/ selling coffee from a cart./ When I asked him for directions,/ he smiled and told me/ the next train wouldn't come for two hours./ Then he handed me a cup of coffee/ and refused to take my money./
 
-Its sales manager says a difference of only a few thousand yen a month/ still changes the total repayment over 40 or 50 years./ The company says rising rates/ have not reduced the number of new homes it builds./ It still offers customers funding and repayment plans/ that assume further increases./ He thinks prospective buyers should not hurry,/ but be guided carefully toward repayments they can truly manage./
+With nothing else to do,/ I walked down a narrow road toward the sea./ I found a quiet beach with no tourists at all,/ just a few fishing boats and some children/ collecting shells near the water./ I sat on the sand for a long time,/ listening to the waves/ and watching the clouds move slowly across the sky./
 
-A financial planner says Japanese society/ has entered an era in which interest rates exist./ She says plans should no longer assume/ that today's low level continues./ She stresses that examining what happens if variable rates climb/ toward around 1.5 to 2 percent is indispensable./ Understanding how fixed and variable loans differ in risk/ matters when shaping repayments around one's own life plan./`;
+By the time I reached my hotel that evening,/ I had missed half of what I'd planned./ Strangely,/ I didn't mind at all./ That unplanned morning became my favorite memory/ of the whole trip./ Now when I travel,/ I still make a plan,/ but I always leave some free time in my schedule/ for the moments I can't predict./`;
 
-const DEFAULT_TITLE = '일본 장기금리 30년 만의 최고치';
+const TRANS = `지난봄, 나는 사진으로만 보던 작은 바닷가 마을로 짧은 여행을 떠났다. 기차 시간부터 꼭 가 보고 싶은 식당까지 모든 것을 미리 계획해 두었다. 그런데 바로 첫날 아침, 기차에서 잠이 들어 내릴 역을 세 정거장이나 지나친 뒤에야 깼다.
+
+처음에는 당황스럽고 좀 한심한 기분이 들었다. 역은 아주 작았고, 주변에는 수레에서 커피를 파는 할아버지 한 분뿐이었다. 길을 묻자 할아버지는 웃으며 다음 기차가 두 시간 뒤에나 온다고 알려 주셨다. 그러고는 커피 한 잔을 건네시고는 돈은 한사코 받지 않으셨다.
+
+달리 할 일이 없어서 나는 바다 쪽으로 난 좁은 길을 따라 걸었다. 관광객이 한 명도 없는 조용한 해변이 나왔고, 고깃배 몇 척과 물가에서 조개껍데기를 줍는 아이들만 있었다. 나는 한참 동안 모래 위에 앉아 파도 소리를 듣고, 하늘을 천천히 흘러가는 구름을 바라보았다.
+
+그날 저녁 호텔에 도착했을 때는 계획했던 일정의 절반은 놓친 뒤였다. 이상하게도 전혀 아쉽지 않았다. 계획에 없던 그 아침은 여행 전체에서 가장 기억에 남는 추억이 되었다. 지금도 여행할 때 계획은 세우지만, 예측할 수 없는 순간을 위해 일정에 늘 여백을 남겨 둔다.`;
+
+const DEFAULT_TITLE = '계획에 없던 바닷가 아침';
+// Earlier versions shipped a different default passage. Only its hash is kept so a copy of it
+// left in the legacy 'lp-text' key is still recognized as the old default and not imported.
+const textHash = s => { s = s.replace(/\s+/g, ' ').trim(); let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193); } return (h >>> 0).toString(36); };
+const OLD_DEFAULT_HASHES = ['1gog2wo'];
+const isDefaultText = t => t.trim() === RAW.trim() || OLD_DEFAULT_HASHES.includes(textHash(t));
 let sentences = [];  // {para, chunks}
 let chunksFlat = [];
 const passage = document.getElementById('passage');
@@ -1341,7 +1380,8 @@ var lib = null, editingId = null;
 const uid = () => 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 const newItem = (title, text) => { const now = Date.now(); return {id: uid(), title, text, created: now, updated: now, studied: 0, listens: 0, dict: {}}; };
 
-function seedItem(){ const it = newItem(DEFAULT_TITLE, RAW); it.id = 'default-jp-rates'; return it; }
+// New libraries get the travel passage; libraries saved by earlier versions keep their own 'default-jp-rates' item untouched.
+function seedItem(){ const it = newItem(DEFAULT_TITLE, RAW); it.id = 'default-trip'; it.trans = TRANS; return it; }
 function loadLib(){
   try {
     const s = localStorage.getItem(LIB_KEY);
@@ -1350,7 +1390,7 @@ function loadLib(){
   const items = [seedItem()]; let cur = items[0].id;
   try { // carry over a passage saved by the previous version
     const t = localStorage.getItem('lp-text'), ti = localStorage.getItem('lp-title');
-    if (t && t.trim() !== RAW.trim()) { const it = newItem(ti || '듣기 연습', t); items.unshift(it); cur = it.id; }
+    if (t && !isDefaultText(t)) { const it = newItem(ti || '듣기 연습', t); items.unshift(it); cur = it.id; }
   } catch(e){}
   return {v: 1, currentId: cur, items};
 }
