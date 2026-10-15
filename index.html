@@ -489,7 +489,7 @@ body:not(.mode-listen) .listen-only{display:none !important}
     <p>🔒 지문, 학습 기록, 녹음, 단어장은 이 브라우저에만 저장되고 따로 서버로 보내지 않아요. 브라우저 데이터를 지우면 함께 사라지니 보관함에서 파일로 내보내 두세요.</p>
     <p>🎙️ 말하기 채점은 브라우저 내장 음성 인식을 써요. 브라우저에 따라 음성이 제조사(Google, Apple, Microsoft 등) 서버를 거쳐 처리될 수 있어요.</p>
     <p>🌐 문장 해석과 단어 뜻은 해당 문장이나 단어를 외부 무료 서비스(Google 번역, MyMemory, Wiktionary 등)에 보내 가져와요. 오늘의 뉴스 자동 받기가 켜져 있으면 매일 처음 열 때 위키백과에서 지문을 받아 오면서 이 서비스들에 자동으로 접속해요(보관함에서 끌 수 있어요). 글꼴은 Google Fonts에서 불러와요.</p>
-    <p>💻 권장 브라우저: Chrome · Edge · Safari 최신 버전</p>
+    <p>💻 권장 브라우저: Chrome · Edge · Safari 최신 버전 · 버전 2026.10.15-3</p>
   </footer>
 </div>
 
@@ -1784,32 +1784,44 @@ function firstSentences(t, n){
   return cleanForListening(t).split(/(?<=[.?!])\s+(?=[A-Z0-9"“])/).slice(0, n).join(' ');
 }
 const endDot = t => /[.?!]["”']?$/.test(t) ? t : t + '.';
-// 'In the news' stories stay up for days, so stories already used in earlier daily passages (prev) are skipped
-// and the parts of the feed that change every day (featured article, most read, on this day) fill the rest.
+// 'In the news' stories stay up for days (often reworded slightly), so any sentence that mostly repeats one
+// from earlier daily passages (prev) is dropped, and the parts of the feed that change every day
+// (featured article, most read, on this day) fill the rest.
+const splitSents = t => t.split(/\n+|(?<=[.?!]["”']?)\s+(?=["“]?[A-Z0-9])/).map(s => s.trim()).filter(Boolean);
+const keyWords = s => new Set((s.toLowerCase().match(/[a-z0-9]+/g) || []).filter(w => w.length > 3));
 function composeDaily(feed, prev = ''){
   const paras = [], seen = new Set(), WANT = 3;
-  const fresh = t => t && !prev.includes(t.slice(0, 80));
+  const used = splitSents(prev).map(keyWords).filter(w => w.size >= 3);
+  const repeats = s => {
+    const w = keyWords(s); if (w.size < 3) return false;
+    return used.some(u => { let n = 0; w.forEach(x => { if (u.has(x)) n++; }); return n / (w.size + u.size - n) >= 0.5; });
+  };
+  // keep only new sentences; a paragraph whose lead sentence was already used is skipped entirely
+  const add = (lead, rest = '') => {
+    if (!lead || repeats(lead)) return false;
+    const sents = [lead, ...splitSents(rest).filter(s => !repeats(s))];
+    paras.push(sents.join(' '));
+    sents.forEach(s => used.push(keyWords(s)));
+    return true;
+  };
   for (const n of feed.news || []) {
     if (paras.length >= 2) break;
-    const head = cleanForListening(htmlText(n.story));
-    if (!fresh(head)) continue;
     const link = (n.links || []).find(l => l.extract && !seen.has(l.title));
-    if (link) seen.add(link.title);
-    paras.push(endDot(head) + (link ? ' ' + firstSentences(link.extract, 2) : ''));
+    if (add(endDot(cleanForListening(htmlText(n.story))), link ? firstSentences(link.extract, 2) : '') && link) seen.add(link.title);
   }
-  const tfa = feed.tfa && feed.tfa.extract && firstSentences(feed.tfa.extract, 4);
-  if (fresh(tfa)) { paras.push(tfa); seen.add(feed.tfa.title); }
+  if (feed.tfa && feed.tfa.extract) {
+    const [lead, ...rest] = splitSents(firstSentences(feed.tfa.extract, 4));
+    if (add(lead, rest.join(' '))) seen.add(feed.tfa.title);
+  }
   for (const a of (feed.mostread || {}).articles || []) {
     if (paras.length >= WANT) break;
     if (!a.extract || seen.has(a.title)) continue;
-    const t = firstSentences(a.extract, 3);
-    if (fresh(t)) { paras.push(t); seen.add(a.title); }
+    const [lead, ...rest] = splitSents(firstSentences(a.extract, 3));
+    if (add(lead, rest.join(' '))) seen.add(a.title);
   }
   for (const e of feed.onthisday || []) {
     if (paras.length >= WANT) break;
-    const t = e.text && cleanForListening(e.text);
-    if (!fresh(t)) continue;
-    paras.push(`On this day in ${e.year}: ${endDot(t)}`);
+    if (e.text) add(`On this day in ${e.year}: ${endDot(cleanForListening(e.text))}`);
   }
   return paras.filter(Boolean).join('\n\n');
 }
